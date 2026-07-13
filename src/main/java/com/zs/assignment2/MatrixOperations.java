@@ -29,7 +29,7 @@ class Matrix {
         }
     }
 
-    public Matrix MatrixAdd(Matrix other) {
+    public Matrix matrixAdd(Matrix other) {
         if (rows != other.rows || cols != other.cols) {
             throw new IllegalArgumentException("Addition not possible dimesions must be same for both of the matrix for addition");
         }
@@ -43,9 +43,9 @@ class Matrix {
         return result;
     }
 
-    public Matrix MatrixSubtract(Matrix other) {
+    public Matrix matrixSubtract(Matrix other) {
         if (rows != other.rows || cols != other.cols) {
-            throw new IllegalArgumentException("Addition not possible dimesions must be same for both of the matrix for addition");
+            throw new IllegalArgumentException("Subtraction is not possible dimesions must be same for both of the matrix for addition");
         }
         Matrix result = new Matrix(rows, cols);
         for (int i = 0; i < rows; i++) {
@@ -57,7 +57,7 @@ class Matrix {
         return result;
     }
 
-    public Matrix MatrixMutiply(Matrix other) {
+    public Matrix matrixMutiply(Matrix other) {
         if (cols != other.rows) {
             throw new IllegalArgumentException("Multiplication not possible");
         }
@@ -74,7 +74,7 @@ class Matrix {
         return result;
     }
 
-    public Matrix MatrixScalarMultiply(int scalar) {
+    public Matrix matrixScalarMultiply(int scalar) {
         Matrix result = new Matrix(rows, cols);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -85,8 +85,8 @@ class Matrix {
 
     }
 
-    public Matrix MatrixTranspose() {
-        Matrix result = new Matrix(rows, cols);
+    public Matrix matrixTranspose() {
+        Matrix result = new Matrix(cols,rows);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 result.data[j][i] = data[i][j];
@@ -114,7 +114,7 @@ public class MatrixOperations {
         int r2 = sc.nextInt();
         System.out.print("Enter the number of columne in matrix B: ");
         int c2 = sc.nextInt();
-        Matrix B = new Matrix(r1, c1);
+        Matrix B = new Matrix(r2, c2);
         System.out.println("Enter the matrix B: ");
         B.input(sc);
         //Input for the scalar
@@ -123,7 +123,7 @@ public class MatrixOperations {
         //Addition
         try {
             System.out.println("A+B : ");
-            Matrix add = A.MatrixAdd(B);
+            Matrix add = A.matrixAdd(B);
             add.display();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -132,7 +132,7 @@ public class MatrixOperations {
         //Subtraction
         try {
             System.out.println("A-B : ");
-            Matrix sub = A.MatrixSubtract(B);
+            Matrix sub = A.matrixSubtract(B);
             sub.display();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -141,7 +141,7 @@ public class MatrixOperations {
         //Multiply
         try {
             System.out.println("A*B : ");
-            Matrix multi = A.MatrixMutiply(B);
+            Matrix multi = A.matrixMutiply(B);
             multi.display();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -149,12 +149,12 @@ public class MatrixOperations {
         }
         //Transpose
         System.out.println("Transpose of A is : ");
-        Matrix ATranspose = A.MatrixTranspose();
+        Matrix ATranspose = A.matrixTranspose();
         ATranspose.display();
 
         //scalarmultiply
         System.out.println("Scalar k * A : ");
-        Matrix scalar = A.MatrixScalarMultiply(k);
+        Matrix scalar = A.matrixScalarMultiply(k);
         scalar.display();
 
         sc.close();
