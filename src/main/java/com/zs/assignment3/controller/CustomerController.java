@@ -22,15 +22,15 @@ public class CustomerController {
     public void showMenu() {
         while (true) {
             System.out.println("\n╔══════════════════════════════╗");
-            System.out.println("║      🛒 Customer Panel       ║");
+            System.out.println("║      Customer Panel          ║");
             System.out.println("╚══════════════════════════════╝");
-            System.out.println("1. 📂 View Categories");
-            System.out.println("2. 🗂️ View Subcategories");
-            System.out.println("3. 🧺 View Products by Category");
-            System.out.println("4. 🧾 View Products by Subcategory");
-            System.out.println("5. 🔎 View Product");
-            System.out.println("6. ✨ Search Product");
-            System.out.println("7. ⬅️ Back");
+            System.out.println("1.  View Categories");
+            System.out.println("2. View Subcategories");
+            System.out.println("3. View Products by Category");
+            System.out.println("4. View Products by Subcategory");
+            System.out.println("5. View Product");
+            System.out.println("6. Search Product");
+            System.out.println("7. Back");
             System.out.print("Choose an option: ");
 
             String choice = scanner.nextLine().trim();
@@ -63,7 +63,7 @@ public class CustomerController {
 
     private void viewCategories() {
         List<Category> categories = categoryService.getAllCategories();
-        System.out.println("\n✨ Available Categories ✨");
+        System.out.println("\n Available Categories ");
         for (Category category : categories) {
             System.out.println("   • " + category.getName());
         }
@@ -78,7 +78,7 @@ public class CustomerController {
             System.out.println("Category not found. Please try one of the categories listed above.");
             return;
         }
-        System.out.println("\n🗂️ Subcategories in '" + category.getName() + "'");
+        System.out.println("\n Subcategories in '" + category.getName() + "'");
         for (SubCategory subCategory : category.getSubCategories()) {
             System.out.println("   • " + subCategory.getName());
         }
@@ -98,7 +98,7 @@ public class CustomerController {
             System.out.println("No products found for that category.");
             return;
         }
-        System.out.println("\n🛍️ Products in '" + category.getName() + "'");
+        System.out.println("\n️ Products in '" + category.getName() + "'");
         for (Product product : products) {
             System.out.println(product.getDisplayDetails());
         }
@@ -113,7 +113,7 @@ public class CustomerController {
             System.out.println("Category not found. Please try one of the categories listed above.");
             return;
         }
-        System.out.println("\n🗂️ Available subcategories in '" + category.getName() + "'");
+        System.out.println("\n Available subcategories in '" + category.getName() + "'");
         for (SubCategory subCategory : category.getSubCategories()) {
             System.out.println("   • " + subCategory.getName());
         }
@@ -124,7 +124,7 @@ public class CustomerController {
             System.out.println("No products found for that subcategory.");
             return;
         }
-        System.out.println("\n🧾 Showing products for '" + category.getName() + "' > '" + subCategoryName + "'");
+        System.out.println("\n Showing products for '" + category.getName() + "' > '" + subCategoryName + "'");
         for (Product product : products) {
             System.out.println(product.getDisplayDetails());
         }
@@ -137,7 +137,7 @@ public class CustomerController {
         if (product == null) {
             System.out.println("Product not found.");
         } else {
-            System.out.println("\n🔎 Product Details");
+            System.out.println("\n Product Details");
             System.out.println("Category: " + product.getCategory());
             System.out.println("Subcategory: " + product.getSubCategory());
             System.out.println(product.getDisplayDetails());
@@ -151,7 +151,7 @@ public class CustomerController {
         if (results.isEmpty()) {
             System.out.println("No products found.");
         } else {
-            System.out.println("\n✨ Search Results ✨");
+            System.out.println("\n Search Results ");
             for (Product product : results) {
                 System.out.println(product.getDisplayDetails());
             }
@@ -160,7 +160,7 @@ public class CustomerController {
 
     private void printAvailableCategories() {
         List<Category> categories = categoryService.getAllCategories();
-        System.out.println("\n✨ Available Categories ✨");
+        System.out.println("\n Available Categories ");
         for (Category category : categories) {
             System.out.println("   • " + category.getName());
         }
