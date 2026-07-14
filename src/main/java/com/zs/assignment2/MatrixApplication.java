@@ -1,12 +1,12 @@
 import java.util.Scanner;
 
-public class MatrixApplicatio{
+public class MatrixApplication{
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         //Input for matrix A
         System.out.print("\nEnter the number of rows in matrix A: ");
         int r1 = sc.nextInt();
-        System.out.print("Enter the number of columne in matrix A: ");
+        System.out.print("Enter the number of columnns in matrix A: ");
         int c1 = sc.nextInt();
         Matrix A = new Matrix(r1, c1);
         System.out.println("Enter the matrix A: ");
@@ -14,7 +14,7 @@ public class MatrixApplicatio{
         //Input for matrix B
         System.out.print("\nEnter the number of rows in matrix B: ");
         int r2 = sc.nextInt();
-        System.out.print("Enter the number of columne in matrix B: ");
+        System.out.print("Enter the number of columnns in matrix B: ");
         int c2 = sc.nextInt();
         Matrix B = new Matrix(r2, c2);
         System.out.println("Enter the matrix B: ");
@@ -43,7 +43,7 @@ public class MatrixApplicatio{
         //Multiply
         try {
             System.out.println("A*B : ");
-            Matrix multi = A.matrixMutiply(B);
+            Matrix multi = A.matrixMultiply(B);
             multi.display();
         } catch (Exception e) {
             System.out.println(e.getMessage());

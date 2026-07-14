@@ -30,7 +30,7 @@ public class Matrix{
 
     public Matrix matrixAdd(Matrix other) {
         if (rows != other.rows || cols != other.cols) {
-            throw new IllegalArgumentException("Addition not possible dimesions must be same for both of the matrix for addition");
+            throw new IllegalArgumentException("Addition not possible dimensions must be same for both of the matrix for addition");
         }
         Matrix result = new Matrix(rows, cols);
         for (int i = 0; i < rows; i++) {
@@ -44,7 +44,7 @@ public class Matrix{
 
     public Matrix matrixSubtract(Matrix other) {
         if (rows != other.rows || cols != other.cols) {
-            throw new IllegalArgumentException("Subtraction is not possible dimesions must be same for both of the matrix for addition");
+            throw new IllegalArgumentException("Subtraction is not possible dimensions must be same for both of the matrix for addition");
         }
         Matrix result = new Matrix(rows, cols);
         for (int i = 0; i < rows; i++) {
@@ -56,7 +56,7 @@ public class Matrix{
         return result;
     }
 
-    public Matrix matrixMutiply(Matrix other) {
+    public Matrix matrixMultiply(Matrix other) {
         if (cols != other.rows) {
             throw new IllegalArgumentException("Multiplication not possible");
         }
