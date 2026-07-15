@@ -1,7 +1,7 @@
-package services;
+package zs.assignment3.services;
 
-import model.Category;
-import model.SubCategory;
+import zs.assignment3.model.*;
+import zs.assignment3.controller.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class CategoryService {
         categories.add(personalCare);
     }
 
-    public List<Category> getAllCategories() {
+    public List<zs.assignment3.model.Category> getAllCategories() {
         return categories;
     }
 
@@ -36,7 +36,7 @@ public class CategoryService {
         return category;
     }
 
-    public SubCategory addSubCategory(String categoryName, String subCategoryName, String description) {
+    public zs.assignment3.model.SubCategory addSubCategory(String categoryName, String subCategoryName, String description) {
         for (Category category : categories) {
             if (category.getName().equalsIgnoreCase(categoryName)) {
                 SubCategory subCategory = new SubCategory(category.getSubCategories().size() + 1, subCategoryName, description);
@@ -47,7 +47,7 @@ public class CategoryService {
         return null;
     }
 
-    public Category findCategory(String name) {
+    public zs.assignment3.model.Category findCategory(String name) {
         for (Category category : categories) {
             if (category.getName().equalsIgnoreCase(name)) {
                 return category;

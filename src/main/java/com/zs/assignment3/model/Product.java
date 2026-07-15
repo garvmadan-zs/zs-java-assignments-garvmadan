@@ -1,4 +1,4 @@
-package model;
+package zs.assignment3.model;
 
 public abstract class Product {
     private final int id;
@@ -8,9 +8,9 @@ public abstract class Product {
     private String brand;
     private int stockQuantity;
     private String description;
-    private String category;
+    private final String category;
     private String subCategory;
-    private boolean returnable;
+    private final boolean returnable;
 
     protected Product(int id, String sku, String name, double price, String brand,
                       int stockQuantity, String description, String category,

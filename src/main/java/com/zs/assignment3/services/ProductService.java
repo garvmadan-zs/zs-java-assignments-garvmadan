@@ -1,6 +1,7 @@
-package services;
+package zs.assignment3.services;
 
-import model.*;
+import zs.assignment3.model.*;
+import zs.assignment3.services.*;
 
 import java.util.ArrayList;
 import java.util.List;

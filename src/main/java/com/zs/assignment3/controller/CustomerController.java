@@ -1,10 +1,7 @@
-package controller;
+package zs.assignment3.controller;
 
-import model.Category;
-import model.Product;
-import model.SubCategory;
-import services.CategoryService;
-import services.ProductService;
+import zs.assignment3.model.*;
+import zs.assignment3.services.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -132,7 +129,12 @@ public class CustomerController {
 
     private void viewProduct() {
         System.out.print("Enter product ID: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id;
+        try{ id = Integer.parseInt(scanner.nextLine());}
+        catch(NumberFormatException e){
+            System.out.println("Invalid product id");
+            return;
+        }
         Product product = productService.findById(id);
         if (product == null) {
             System.out.println("Product not found.");

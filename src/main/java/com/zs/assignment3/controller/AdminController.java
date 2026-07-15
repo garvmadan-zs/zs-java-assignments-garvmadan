@@ -1,9 +1,8 @@
-package controller;
+package zs.assignment3.controller;
 
-import model.*;
-import services.CategoryService;
-import services.ProductService;
 
+import zs.assignment3.model.*;
+import zs.assignment3.services.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -98,6 +97,13 @@ public class AdminController {
         String categoryName = scanner.nextLine();
         System.out.print("Enter subcategory name: ");
         String subName = scanner.nextLine();
+        if (subName.equalsIgnoreCase("Electronics") ||
+                subName.equalsIgnoreCase("Grocery") ||
+                subName.equalsIgnoreCase("Personal Care")) {
+
+            System.out.println("Invalid Subcategory name");
+            return;
+        }
         System.out.print("Enter description: ");
         String description = scanner.nextLine();
         SubCategory subCategory = categoryService.addSubCategory(categoryName, subName, description);
@@ -118,9 +124,21 @@ public class AdminController {
         System.out.print("Enter brand: ");
         String brand = scanner.nextLine();
         System.out.print("Enter price: ");
-        double price = Double.parseDouble(scanner.nextLine());
+        double price;
+        try{
+        price = Double.parseDouble(scanner.nextLine());}
+        catch(NumberFormatException e){
+            System.out.println("Invalid price");
+            return ;
+        }
         System.out.print("Enter stock quantity: ");
-        int stock = Integer.parseInt(scanner.nextLine());
+        int stock;
+        try{
+            stock = Integer.parseInt(scanner.nextLine());}
+        catch(NumberFormatException e){
+            System.out.println("Invalid stock ");
+            return ;
+        }
         System.out.print("Enter description: ");
         String description = scanner.nextLine();
         System.out.print("Enter category: ");
