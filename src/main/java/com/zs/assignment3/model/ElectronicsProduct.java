@@ -1,4 +1,4 @@
-package zs.assignment3.model;
+package com.zs.assignment3.model;
 
 public class ElectronicsProduct extends Product {
     private final String warrantyPeriod;

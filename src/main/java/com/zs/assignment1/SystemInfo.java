@@ -1,4 +1,4 @@
-package assignment1;
+package com.zs.assignment1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
