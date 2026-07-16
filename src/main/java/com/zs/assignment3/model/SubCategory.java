@@ -1,4 +1,4 @@
-package zs.assignment3.model;
+package com.zs.assignment3.model;
 
 public class SubCategory {
     private final int id;

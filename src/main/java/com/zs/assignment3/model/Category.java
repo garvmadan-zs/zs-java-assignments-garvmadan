@@ -1,4 +1,4 @@
-package zs.assignment3.model;
+package com.zs.assignment3.model;
 
 import java.util.ArrayList;
 import java.util.List;
