@@ -1,4 +1,4 @@
-package zs.assignment4.model;
+package com.zs.assignment4.model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -51,7 +51,7 @@ public class LruCache<K, V> {
 
         StringBuilder builder = new StringBuilder("LRU Cache contents:\n");
         for (Map.Entry<K, V> entry : entries.entrySet()) {
-            builder.append("- ").append(entry.getKey()).append(" -> ").append(entry.getValue()).append("\n");
+            builder.append("- ").append(entry.getKey()).append(" -> ").append(String.valueOf(entry.getValue())).append("\n");
         }
         return builder.toString();
     }

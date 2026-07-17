@@ -1,9 +1,9 @@
-package zs.assignment4.services;
+package com.zs.assignment4.services;
 
-import zs.assignment4.model.LruCache;
-import zs.assignment4.model.SearchResult;
-import zs.assignment3.model.*;
-import zs.assignment3.services.*;
+import com.zs.assignment4.model.LruCache;
+import com.zs.assignment4.model.SearchResult;
+import com.zs.assignment3.model.*;
+import com.zs.assignment3.services.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,13 +54,10 @@ public class CatalogService {
         books.addSubCategory(new SubCategory(15, "Science", "Educational books"));
         addCategoryIfMissing(books);
 
-        Category groceries = new Category(13, "Groceries", "Daily essentials");
-        groceries.addSubCategory(new SubCategory(16, "Fruits", "Fresh fruits"));
-        groceries.addSubCategory(new SubCategory(17, "Bakery", "Fresh bread and pastries"));
-        addCategoryIfMissing(groceries);
 
-        addProductIfMissing(new GroceryProduct(101, "GR-001", "Apple", 2.50, "FreshFarm", 100, "Sweet red apples", "Groceries", "Fruits", "2026-08-01"));
-        addProductIfMissing(new GroceryProduct(102, "GR-002", "Bread", 1.20, "BakeHouse", 80, "Soft loaf", "Groceries", "Bakery", "2026-07-20"));
+
+
+        addProductIfMissing(new GroceryProduct(102, "GR-002", "Bread", 1.20, "BakeHouse", 80, "Soft loaf", "Grocery", "Bakery", "2026-07-20"));
         addProductIfMissing(new ElectronicsProduct(103, "EL-001", "Laptop", 799.99, "TechNova", 25, "15-inch laptop", "Electronics", "Laptops", "2 years"));
         addProductIfMissing(new PersonalCareProduct(104, "PC-001", "Face Wash", 12.99, "GlowCare", 60, "Gentle cleanser", "Personal Care", "Skincare", "Oily"));
         addProductIfMissing(new ElectronicsProduct(105, "EL-002", "Smartphone", 499.99, "MobilePlus", 40, "5G smartphone", "Electronics", "Mobile", "1 year"));
@@ -72,12 +69,12 @@ public class CatalogService {
         addProductIfMissing(new GroceryProduct(110, "GR-004", "Orange", 3.20, "CitrusFarm", 90, "Sweet oranges", "Groceries", "Fruits", "2026-08-05"));
         addProductIfMissing(new ElectronicsProduct(111, "EL-004", "Smart Watch", 149.99, "PulseTech", 28, "Fitness smartwatch", "Electronics", "Wearables", "2 years"));
         addProductIfMissing(new PersonalCareProduct(112, "PC-004", "Conditioner", 7.99, "HairGlow", 55, "Silky conditioner", "Personal Care", "Haircare", "Normal"));
-        addProductIfMissing(new GroceryProduct(113, "GR-005", "Cake", 6.50, "BakeHouse", 30, "Chocolate cake", "Groceries", "Bakery", "2026-07-22"));
+        addProductIfMissing(new GroceryProduct(113, "GR-005", "Cake", 6.50, "BakeHouse", 30, "Chocolate cake", "Grocery", "Bakery", "2026-07-22"));
         addProductIfMissing(new ElectronicsProduct(114, "EL-005", "Tablet", 329.99, "TabWorld", 20, "Portable tablet", "Electronics", "Tablets", "1 year"));
 
         addProductIfMissing(new GroceryProduct(115, "GR-006", "Rice", 4.99, "GrainPlus", 60, "Long grain rice", "Groceries", "Staples", "2026-09-01"));
         addProductIfMissing(new PersonalCareProduct(116, "PC-005", "Toothpaste", 2.99, "FreshSmile", 70, "Fluoride toothpaste", "Personal Care", "Oralcare", "All"));
-        addProductIfMissing(new GroceryProduct(117, "GR-007", "Cheese", 5.40, "DairyBest", 40, "Creamy cheese", "Groceries", "Dairy", "2026-07-25"));
+        addProductIfMissing(new GroceryProduct(117, "GR-007", "Cheese", 5.40, "DairyBest", 40, "Creamy cheese", "Grocery", "Dairy", "2026-07-25"));
         addProductIfMissing(new ElectronicsProduct(118, "EL-006", "Keyboard", 49.99, "KeyPro", 22, "Mechanical keyboard", "Electronics", "Accessories", "1 year"));
     }
 
@@ -97,7 +94,7 @@ public class CatalogService {
     }
 
     public SearchResult search(String query) {
-        String normalized = query.trim();
+        String normalized = query.trim().toLowerCase();
         if (normalized.isEmpty()) {
             throw new IllegalArgumentException("Search keyword cannot be empty.");
         }

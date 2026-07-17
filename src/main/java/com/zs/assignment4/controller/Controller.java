@@ -1,9 +1,9 @@
-package zs.assignment4.controller;
-import zs.assignment4.model.SearchResult;
-import zs.assignment4.services.CatalogService;
+package com.zs.assignment4.controller;
+import com.zs.assignment4.model.SearchResult;
+import com.zs.assignment4.services.CatalogService;
 import java.util.Scanner;
 
-import static zs.assignment4.services.CatalogService.*;
+import com.zs.assignment4.services.CatalogService;
 
 public class Controller {
     private final Scanner scanner;

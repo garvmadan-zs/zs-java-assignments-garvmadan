@@ -1,4 +1,4 @@
-package zs.assignment4.model;
+package com.zs.assignment4.model;
 
 public class SearchResult {
     private final String type;
@@ -18,14 +18,21 @@ public class SearchResult {
     }
 
     public String getContent() {
+
         return content;
     }
 
     public String getHierarchy() {
+
         return hierarchy;
     }
 
     public boolean isFromCache() {
         return fromCache;
     }
+
+    @Override
+    public String toString(){
+        return "type : '" + type + '\'' + "\n" + content ;}
+
 }

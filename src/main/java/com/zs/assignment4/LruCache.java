@@ -1,6 +1,6 @@
-package zs.assignment4;
+package com.zs.assignment4;
 
-import zs.assignment4.controller.Controller;
+import com.zs.assignment4.controller.Controller;
 import java.util.Scanner;
 
 public class LruCache{
