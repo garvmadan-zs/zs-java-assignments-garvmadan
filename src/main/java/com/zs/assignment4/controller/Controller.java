@@ -15,7 +15,7 @@ public class Controller {
     public void showMenu() {
         while (true) {
             Menu menu= new Menu();
-            menu.DispalyMenu();
+            menu.DisplayMenu();
             String choice = scanner.nextLine().trim();
             try {
                 switch (choice) {
