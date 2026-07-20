@@ -1,0 +1,137 @@
+commit 31c97476c7777e42033a9cef41461d45f7744b0e
+Merge: 62dfdc0 0c1922e
+Author: Abhishek Kumar <125887648+AbhishekKumar-zs@users.noreply.github.com>
+Date:   Thu Jul 16 11:10:54 2026 +0530
+
+    Merge pull request #7 from garvmadan-zs/Assignment3-EcommProductCatalogue
+
+
+
+
+commit 0c1922eeafcf9c6f6d5d7193c0d92a8b5fdedc19
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Wed Jul 15 17:09:52 2026 +0530
+
+    Garv | Assignment 3 | Approved the request
+
+commit 08a594c9ddede46ac0998649ef40e826b396693a
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Tue Jul 14 17:18:34 2026 +0530
+
+    Garv | Assignment 3 | ECommerce Product Catalogue
+
+commit 9ff091ac93af6693f0e099298ea11e97d5a9e323
+Merge: e1643f4 a5b3e4b
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Tue Jul 14 15:57:56 2026 +0530
+
+    Merge branch 'main' of github.com:garvmadan-zs/zs-java-assignments-garvmadan
+
+    # Conflicts:
+    #       src/main/java/com/zs/assignment2/Matrix.java
+    #       src/main/java/com/zs/assignment2/MatrixApplication.java
+
+commit a5b3e4b7f27fb839d342a1c465e9fad10d244204
+Merge: f07ba29 898c8bf
+Author: Abhishek Kumar <125887648+AbhishekKumar-zs@users.noreply.github.com>
+Date:   Tue Jul 14 14:07:51 2026 +0530
+
+    Merge pull request #5 from garvmadan-zs/Assignment2-MatrixOperations
+
+    Assigment 2 | Matrix Operations Java Program
+
+commit 898c8bf9951746eae40deda39f67d8e4fdefa429
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Tue Jul 14 13:08:02 2026 +0530
+
+    Garv | Assignment2 | Required changes done
+
+commit e1643f48827b8ca2ffd61c8983b3353a4b61c314
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Tue Jul 14 12:57:17 2026 +0530
+
+    Garv | Assignment3 | Ecommerce Product Catalogue
+
+commit dcd1da72549463ded2ad8223546bcee49198bd49
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Tue Jul 14 12:53:50 2026 +0530
+
+    Garv | Assignment3 | Ecommerce Product Catalogue
+
+commit f653b74bc141ac86f7dbc30816a5d756c05e43b7
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Tue Jul 14 12:37:06 2026 +0530
+
+    Garv | Assignment3 | Ecommerce Product Catalogue
+
+commit 5797bd486057c5981a12f537a60fd4076834a4c3
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Mon Jul 13 14:09:26 2026 +0530
+
+    Garv | Assignment 2 | Required Changes Done
+
+commit f07ba29e663d53957bc55919184a21176f960bf1
+Merge: 71b0955 027a177
+Author: Abhishek Kumar <125887648+AbhishekKumar-zs@users.noreply.github.com>
+Date:   Mon Jul 13 13:34:04 2026 +0530
+
+    Merge pull request #3 from garvmadan-zs/assignment1-systeminfo
+
+    Assignment1 | SystemInfo
+
+commit a8a84f56b550c2f403512c2556ffed8f0d0db1ac
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Mon Jul 13 13:15:54 2026 +0530
+
+    Garv | Assignment 2 | Applied the requested changes
+
+commit 023dcca9ed2e9ea566ebba535f32d5732e5b15bb
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Thu Jul 9 21:07:33 2026 +0530
+
+    Garv | Assignment 2 | Formatting and file structure
+
+commit 8341f2211809ad97a498794440846141a2efc033
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Thu Jul 9 20:56:46 2026 +0530
+
+    Garv | Assigment 2 | Matrix Operations Java Program
+
+commit 71b095552b4b2f379c8348541b42a2af509ae0d1
+Merge: 0c74eef 89d206c
+Author: sowmyareddy-zs <sowmya.reddy@zopsmart.com>
+Date:   Thu Jul 9 15:35:32 2026 +0530
+
+    Merge pull request #4 from garvmadan-zs/assignment/zero
+
+    Assignment 0 | Hello World Program
+
+commit 9613fb37f72156628c2f304d3b6de0823a0962fb
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Wed Jul 8 17:14:03 2026 +0530
+
+    Garv | Assignment 1 | Created Java Program to Show the System Information
+
+commit 325cb322eacd796d920b03600e8e353478c50f44
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Wed Jul 8 17:09:36 2026 +0530
+
+    Garv | Assignment 1 | Created Java Program to Show the System Information
+
+commit 12dc643dfba216cf60fd2dcc2f4319a4ebd0efd6
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Wed Jul 8 17:06:29 2026 +0530
+
+    Garv | Assignment 1 | Created Java Program to Show the System Information
+
+commit f9b8d811d4413cdf7eb56c8db52ae51390f964cf
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Wed Jul 8 16:42:54 2026 +0530
+
+    Assignment 1 | Madan | added idea directory to the git ignore
+
+commit f653b7c69beb50a996e31425d38c1098f298c288
+Author: Garv Madan <garv.madan@zopsmart.com>
+Date:   Tue Jul 7 17:57:13 2026 +0530
+
+    garv | assignment-zero | connecting git from local machine to github
