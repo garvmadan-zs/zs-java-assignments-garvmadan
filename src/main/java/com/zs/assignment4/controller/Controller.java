@@ -13,9 +13,10 @@ public class Controller {
     }
 
     public void showMenu() {
+        Menu menu= new Menu();
         while (true) {
-            Menu menu= new Menu();
-            menu.DisplayMenu();
+
+            menu.displayMenu();
             String choice = scanner.nextLine().trim();
             try {
                 switch (choice) {

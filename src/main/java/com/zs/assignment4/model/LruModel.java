@@ -3,11 +3,11 @@ package com.zs.assignment4.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class LruCache<K, V> {
+public class LruModel<K, V> {
     private final int capacity;
     private final Map<K, V> entries;
 
-    public LruCache(int capacity) {
+    public LruModel(int capacity) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("Capacity must be greater than zero.");
         }

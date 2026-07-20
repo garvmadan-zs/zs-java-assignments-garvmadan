@@ -2,7 +2,7 @@ package com.zs.assignment4.controller;
 
 public class Menu {
 
-    public void DisplayMenu(){
+    public void displayMenu(){
             System.out.println("\n=== Assignment 4 Menu ===");
             System.out.println("1. Display category hierarchy");
             System.out.println("2. Search category / subcategory / product");
