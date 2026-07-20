@@ -126,12 +126,12 @@ Date:   Wed Jul 8 17:06:29 2026 +0530
 
 commit f9b8d811d4413cdf7eb56c8db52ae51390f964cf
 Author: Garv Madan <garv.madan@zopsmart.com>
-Date:   Wed Jul 8 16:42:54 2026 +0530
+Date: Wed Jul 8 16:42:54 2026 +0530
 
     Assignment 1 | Madan | added idea directory to the git ignore
 
 commit f653b7c69beb50a996e31425d38c1098f298c288
-Author: Garv Madan <garv.madan@zopsmart.com>
-Date:   Tue Jul 7 17:57:13 2026 +0530
 
-    garv | assignment-zero | connecting git from local machine to github
+
+
+
