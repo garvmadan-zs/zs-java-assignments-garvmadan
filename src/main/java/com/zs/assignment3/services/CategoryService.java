@@ -1,10 +1,8 @@
 package com.zs.assignment3.services;
-import com.zs.assignment3.model.Category;
-import com.zs.assignment3.model.Product;
-import com.zs.assignment3.model.SubCategory;
-import com.zs.assignment3.model.ElectronicsProduct;
-import com.zs.assignment3.model.PersonalCareProduct;
-import com.zs.assignment3.model.GroceryProduct;
+
+import com.zs.assignment3.model.*;
+import com.zs.assignment3.controller.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
