@@ -1,10 +1,10 @@
-package zs.assignment3;
+package com.zs.assignment3;
 
 
-import zs.assignment3.services.CategoryService;
-import zs.assignment3.services.ProductService;
-import zs.assignment3.controller.AdminController;
-import zs.assignment3.controller.CustomerController;
+import com.zs.assignment3.services.CategoryService;
+import com.zs.assignment3.services.ProductService;
+import com.zs.assignment3.controller.AdminController;
+import com.zs.assignment3.controller.CustomerController;
 import java.util.Scanner;
 
 public class ECommApplication {

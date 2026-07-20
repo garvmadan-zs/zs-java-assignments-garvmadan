@@ -1,4 +1,4 @@
-package zs.assignment3.model;
+package com.zs.assignment3.model;
 public class PersonalCareProduct extends Product {
     private final String skinType;
 

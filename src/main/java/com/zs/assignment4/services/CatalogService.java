@@ -1,9 +1,10 @@
 package com.zs.assignment4.services;
 
+import com.zs.assignment3.model.*;
 import com.zs.assignment4.model.LruCache;
 import com.zs.assignment4.model.SearchResult;
-import com.zs.assignment3.model.*;
-import com.zs.assignment3.services.*;
+import com.zs.assignment3.services.CategoryService;
+import com.zs.assignment3.services.ProductService;
 import java.util.ArrayList;
 import java.util.List;
 

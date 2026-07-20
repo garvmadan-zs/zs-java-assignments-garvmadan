@@ -1,8 +1,10 @@
-package zs.assignment3.services;
-
-import zs.assignment3.model.*;
-import zs.assignment3.controller.*;
-
+package com.zs.assignment3.services;
+import com.zs.assignment3.model.Category;
+import com.zs.assignment3.model.Product;
+import com.zs.assignment3.model.SubCategory;
+import com.zs.assignment3.model.ElectronicsProduct;
+import com.zs.assignment3.model.PersonalCareProduct;
+import com.zs.assignment3.model.GroceryProduct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class CategoryService {
         categories.add(personalCare);
     }
 
-    public List<zs.assignment3.model.Category> getAllCategories() {
+    public List<com.zs.assignment3.model.Category> getAllCategories() {
         return categories;
     }
 
@@ -36,7 +38,7 @@ public class CategoryService {
         return category;
     }
 
-    public zs.assignment3.model.SubCategory addSubCategory(String categoryName, String subCategoryName, String description) {
+    public com.zs.assignment3.model.SubCategory addSubCategory(String categoryName, String subCategoryName, String description) {
         for (Category category : categories) {
             if (category.getName().equalsIgnoreCase(categoryName)) {
                 SubCategory subCategory = new SubCategory(category.getSubCategories().size() + 1, subCategoryName, description);
@@ -47,7 +49,7 @@ public class CategoryService {
         return null;
     }
 
-    public zs.assignment3.model.Category findCategory(String name) {
+    public com.zs.assignment3.model.Category findCategory(String name) {
         for (Category category : categories) {
             if (category.getName().equalsIgnoreCase(name)) {
                 return category;

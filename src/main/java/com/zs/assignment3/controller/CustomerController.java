@@ -1,7 +1,9 @@
-package zs.assignment3.controller;
+package com.zs.assignment3.controller;
 
-import zs.assignment3.model.*;
-import zs.assignment3.services.*;
+import com.zs.assignment3.model.Category;
+import com.zs.assignment3.model.Product;
+import com.zs.assignment3.model.SubCategory;
+import com.zs.assignment3.services.*;
 import java.util.List;
 import java.util.Scanner;
 
