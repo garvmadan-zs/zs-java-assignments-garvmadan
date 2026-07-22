@@ -3,7 +3,6 @@ package com.zs.assignment5.services;
 
 import com.zs.assignment5.exceptions.GitFileNotFoundException;
 import com.zs.assignment5.exceptions.GitLogFormatException;
-import com.zs.assignment5.exceptions.GitLogParseException;
 import com.zs.assignment5.exceptions.IncompleteCommitMessageException;
 import com.zs.assignment5.model.CommitAnalysisResult;
 import com.zs.assignment5.model.CommitEntry;
@@ -38,16 +37,16 @@ public class GitLogAnalysisService {
     private static final Pattern GIT_DATE_PATTERN_ALT = Pattern.compile(
             "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun),\\s+(\\d{1,2})\\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s+(\\d{4})\\s+(\\d{2}):(\\d{2}):(\\d{2})\\s+([+-]\\d{4})$");
 
-    public CommitAnalysisResult analyzeGitLog(String filePath, LocalDate thresholdDate) throws GitLogParseException, GitLogFormatException, IncompleteCommitMessageException, GitFileNotFoundException {
+    public CommitAnalysisResult analyzeGitLog(String filePath, LocalDate thresholdDate) throws GitLogFormatException, IncompleteCommitMessageException, GitFileNotFoundException {
         List<CommitEntry> commits = parseGitLog(filePath, thresholdDate);
         return buildAnalysis(commits, thresholdDate);
     }
 
-    public List<CommitEntry> parseGitLog(String filePath) throws GitLogParseException, GitLogFormatException, IncompleteCommitMessageException, GitFileNotFoundException {
+    public List<CommitEntry> parseGitLog(String filePath) throws  GitLogFormatException, IncompleteCommitMessageException, GitFileNotFoundException {
         return parseGitLog(filePath, LocalDate.MIN);
     }
 
-    public List<CommitEntry> parseGitLog(String filePath, LocalDate thresholdDate) throws GitLogParseException, GitLogFormatException, IncompleteCommitMessageException, GitFileNotFoundException {
+    public List<CommitEntry> parseGitLog(String filePath, LocalDate thresholdDate) throws  GitLogFormatException, IncompleteCommitMessageException, GitFileNotFoundException {
         Path path = Paths.get(filePath);
         if (Files.notExists(path)) {
             throw new GitFileNotFoundException(filePath);
@@ -73,7 +72,7 @@ public class GitLogAnalysisService {
                     if (!currentBlock.isEmpty()) {
                         CommitEntry parsedCommit = parseCommitBlock(currentBlock, thresholdDate, currentBlockStartLineNumber);
                         if (parsedCommit == null) {
-                            break;
+                            continue;
                         }
                         commits.add(parsedCommit);
                     }
@@ -101,7 +100,7 @@ public class GitLogAnalysisService {
         }
     }
 
-    private CommitEntry parseCommitBlock(List<String> block, LocalDate thresholdDate, int blockStartLineNumber) throws GitLogParseException, GitLogFormatException, IncompleteCommitMessageException {
+    private CommitEntry parseCommitBlock(List<String> block, LocalDate thresholdDate, int blockStartLineNumber) throws GitLogFormatException, IncompleteCommitMessageException {
         if (block.isEmpty()) {
             throw new GitLogFormatException("Encountered an empty commit block.");
         }
@@ -196,8 +195,9 @@ public class GitLogAnalysisService {
         String authorValue = line.substring("Author:".length()).trim();
         if (authorValue.contains("<") && authorValue.contains(">")) {
             int start = authorValue.indexOf('<');
-            int end = authorValue.indexOf('>');
-            return authorValue.substring(0, start).trim();
+            int end=authorValue.indexOf('>');
+
+            return authorValue.substring(start+1,end).trim();
         }
         return authorValue;
     }

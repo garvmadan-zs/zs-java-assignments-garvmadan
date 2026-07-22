@@ -1,7 +1,6 @@
 package com.zs.assignment5.controller;
 import com.zs.assignment5.exceptions.GitFileNotFoundException;
 import com.zs.assignment5.exceptions.GitLogFormatException;
-import com.zs.assignment5.exceptions.GitLogParseException;
 import com.zs.assignment5.exceptions.IncompleteCommitMessageException;
 import com.zs.assignment5.model.CommitAnalysisResult;
 import com.zs.assignment5.services.GitLogAnalysisService;
@@ -12,12 +11,12 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class controller {
+public class Controller {
     private final Scanner scanner;
     private final GitLogAnalysisService gitLogAnalysisService;
     private static final DateTimeFormatter INPUT_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public controller() {
+    public Controller() {
         this.scanner = new Scanner(System.in);
         this.gitLogAnalysisService = new GitLogAnalysisService();
     }
@@ -28,8 +27,6 @@ public class controller {
             LocalDate thresholdDate = parseDate(dateText);
             CommitAnalysisResult result = gitLogAnalysisService.analyzeGitLog(filePath, thresholdDate);
             printReport(filePath, thresholdDate, result);
-        } catch (GitLogParseException ex) {
-            System.out.println("Error: " + ex.getMessage());
         } catch (GitFileNotFoundException ex) {
             System.out.println("Error: " + ex.getMessage());
         } catch (GitLogFormatException ex) {
@@ -41,31 +38,7 @@ public class controller {
         }
     }
 
-    public void runInteractive() {
-        System.out.print("Enter the git log file path: ");
-        String filePath = scanner.nextLine().trim();
 
-        try {
-            gitLogAnalysisService.parseGitLog(filePath);
-        } catch (GitLogParseException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            return;
-        } catch (GitFileNotFoundException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            return;
-        } catch (GitLogFormatException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            return;
-        } catch (IncompleteCommitMessageException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            return;
-        }
-
-        System.out.print("Enter the date (yyyy-MM-dd): ");
-        String dateText = scanner.nextLine().trim();
-
-        run(filePath, dateText);
-    }
 
     private LocalDate parseDate(String dateText) {
         return LocalDate.parse(dateText, INPUT_DATE_FORMATTER);

@@ -1,13 +1,13 @@
 
 package com.zs.assignment5;
 
-import com.zs.assignment5.controller.controller;
+import com.zs.assignment5.controller.Controller;
 import java.util.Scanner;
 
 public class GitLogParser {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        controller controller = new controller();
+        Controller controller = new Controller();
 
         String filePath = args.length > 0 ? args[0] : "";
 
