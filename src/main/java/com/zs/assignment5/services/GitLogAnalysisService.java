@@ -78,10 +78,10 @@ public class GitLogAnalysisService {
                     }
                     currentBlock = new ArrayList<>();
                     currentBlockStartLineNumber = index + 1;
-                    currentBlock.add(trimmed);
-                } else {
-                    currentBlock.add(trimmed);
+
                 }
+                    currentBlock.add(trimmed);
+
             }
 
             if (!currentBlock.isEmpty()) {
