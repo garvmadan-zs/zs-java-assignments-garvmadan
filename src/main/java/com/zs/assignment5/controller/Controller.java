@@ -12,26 +12,21 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Controller {
-    private final Scanner scanner;
+
     private final GitLogAnalysisService gitLogAnalysisService;
     private static final DateTimeFormatter INPUT_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public Controller() {
-        this.scanner = new Scanner(System.in);
+
         this.gitLogAnalysisService = new GitLogAnalysisService();
     }
 
     public void run(String filePath, String dateText) {
         try {
-            gitLogAnalysisService.parseGitLog(filePath);
             LocalDate thresholdDate = parseDate(dateText);
             CommitAnalysisResult result = gitLogAnalysisService.analyzeGitLog(filePath, thresholdDate);
             printReport(filePath, thresholdDate, result);
-        } catch (GitFileNotFoundException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        } catch (GitLogFormatException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        } catch (IncompleteCommitMessageException ex) {
+        } catch (GitFileNotFoundException | GitLogFormatException | IncompleteCommitMessageException ex) {
             System.out.println("Error: " + ex.getMessage());
         } catch (DateTimeParseException ex) {
             System.out.println("Error: Please enter the date in yyyy-MM-dd format.");

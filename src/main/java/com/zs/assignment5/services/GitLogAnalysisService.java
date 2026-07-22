@@ -8,6 +8,7 @@ import com.zs.assignment5.model.CommitAnalysisResult;
 import com.zs.assignment5.model.CommitEntry;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -34,8 +35,6 @@ public class GitLogAnalysisService {
     );
     private static final Pattern GIT_DATE_PATTERN = Pattern.compile(
             "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s+(\\d{1,2})\\s+(\\d{2}):(\\d{2}):(\\d{2})\\s+(\\d{4})\\s+([+-]\\d{4})$");
-    private static final Pattern GIT_DATE_PATTERN_ALT = Pattern.compile(
-            "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun),\\s+(\\d{1,2})\\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s+(\\d{4})\\s+(\\d{2}):(\\d{2}):(\\d{2})\\s+([+-]\\d{4})$");
 
     public CommitAnalysisResult analyzeGitLog(String filePath, LocalDate thresholdDate) throws GitLogFormatException, IncompleteCommitMessageException, GitFileNotFoundException {
         List<CommitEntry> commits = parseGitLog(filePath, thresholdDate);
@@ -47,16 +46,20 @@ public class GitLogAnalysisService {
     }
 
     public List<CommitEntry> parseGitLog(String filePath, LocalDate thresholdDate) throws  GitLogFormatException, IncompleteCommitMessageException, GitFileNotFoundException {
-        Path path = Paths.get(filePath);
-        if (Files.notExists(path)) {
-            throw new GitFileNotFoundException(filePath);
+        try{
+            Path path = Paths.get(filePath);
         }
-        if (!Files.isRegularFile(path)) {
+        catch (InvalidPathException e){
+             System.out.println("invalid path please enter the correct path :");
+                throw new GitLogFormatException(filePath);
+        }
+
+        if (!Files.isRegularFile(Path.of(filePath))) {
             throw new GitLogFormatException("The provided path is not a regular file: " + filePath);
         }
 
         try {
-            List<String> lines = Files.readAllLines(path);
+            List<String> lines = Files.readAllLines(Path.of(filePath));
             if (lines.isEmpty()) {
                 throw new GitLogFormatException("Git log file is empty.");
             }
@@ -71,10 +74,10 @@ public class GitLogAnalysisService {
                 if (trimmed.startsWith("commit ")) {
                     if (!currentBlock.isEmpty()) {
                         CommitEntry parsedCommit = parseCommitBlock(currentBlock, thresholdDate, currentBlockStartLineNumber);
-                        if (parsedCommit == null) {
-                            continue;
+                        if (parsedCommit != null) {
+                            commits.add(parsedCommit);
                         }
-                        commits.add(parsedCommit);
+
                     }
                     currentBlock = new ArrayList<>();
                     currentBlockStartLineNumber = index + 1;
@@ -220,13 +223,6 @@ public class GitLogAnalysisService {
             return LocalDate.of(year, month, day);
         }
 
-        Matcher altMatcher = GIT_DATE_PATTERN_ALT.matcher(normalized);
-        if (altMatcher.matches()) {
-            int day = Integer.parseInt(altMatcher.group(2));
-            int month = monthNumber(altMatcher.group(3));
-            int year = Integer.parseInt(altMatcher.group(4));
-            return LocalDate.of(year, month, day);
-        }
 
         throw new DateTimeParseException("Unsupported git log date format: " + dateLine, normalized, 0);
     }
@@ -250,9 +246,6 @@ public class GitLogAnalysisService {
         Map<String, Map<LocalDate, Integer>> commitsByDeveloperByDay = new TreeMap<>();
 
         for (CommitEntry commit : commits) {
-            if (commit.getCommitDate().isBefore(thresholdDate)) {
-                continue;
-            }
 
             totalCommitsByDeveloper.merge(commit.getAuthor(), 1, Integer::sum);
             commitsByDeveloperByDay.computeIfAbsent(commit.getAuthor(), key -> new LinkedHashMap<>())
