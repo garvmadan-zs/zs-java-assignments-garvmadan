@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class GitLogParser {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         Controller controller = new Controller();
 
@@ -24,5 +25,6 @@ public class GitLogParser {
 
         controller.run(filePath, dateText);
         scanner.close();
+
     }
 }

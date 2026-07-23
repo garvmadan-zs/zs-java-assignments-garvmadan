@@ -46,16 +46,16 @@ public class GitLogAnalysisService {
     }
 
     public List<CommitEntry> parseGitLog(String filePath, LocalDate thresholdDate) throws  GitLogFormatException, IncompleteCommitMessageException, GitFileNotFoundException {
-        try{
-            Path path = Paths.get(filePath);
-        }
-        catch (InvalidPathException e){
-             System.out.println("invalid path please enter the correct path :");
-                throw new GitLogFormatException(filePath);
+        Path path;
+        try {
+            path = Paths.get(filePath);
+        } catch (InvalidPathException e) {
+            System.out.println("invalid path please enter the correct path :");
+            throw new GitLogFormatException(filePath);
         }
 
-        if (!Files.isRegularFile(Path.of(filePath))) {
-            throw new GitLogFormatException("The provided path is not a regular file: " + filePath);
+        if (!Files.isRegularFile(path)) {
+            throw new GitFileNotFoundException("Please enter the correct path ");
         }
 
         try {
@@ -83,7 +83,7 @@ public class GitLogAnalysisService {
                     currentBlockStartLineNumber = index + 1;
 
                 }
-                    currentBlock.add(trimmed);
+                currentBlock.add(trimmed);
 
             }
 
