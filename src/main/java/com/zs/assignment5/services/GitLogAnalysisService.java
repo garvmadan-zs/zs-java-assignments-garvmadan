@@ -53,9 +53,12 @@ public class GitLogAnalysisService {
             System.out.println("invalid path please enter the correct path :");
             throw new GitLogFormatException(filePath);
         }
+        if(Files.notExists(path)){
+            throw new GitFileNotFoundException("Please enter the correct path ");
+        }
 
         if (!Files.isRegularFile(path)) {
-            throw new GitFileNotFoundException("Please enter the correct path ");
+            throw new GitLogFormatException("Format is not correct ");
         }
 
         try {
