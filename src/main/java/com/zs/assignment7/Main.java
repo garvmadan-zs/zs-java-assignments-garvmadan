@@ -22,7 +22,6 @@ public class Main {
         StudentDAO dao= new StudentDAO();
         dao.createTables();
         dao.insertDepartments();
-        logger.info("Application Finished");
         StudentDAO studentDAO =new StudentDAO();
         StudentService generator=new StudentService(studentDAO);
         StudentController studentController=new StudentController(generator);
@@ -30,7 +29,5 @@ public class Main {
         studentController.assignDepartments();
         exportController.exportStudents("student_departments.csv");
         CompressUtil.compressFile("student_departments.csv","student_departments_compressed.csv.gz");
-
-
     }
 }
