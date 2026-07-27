@@ -26,7 +26,7 @@ public class CategoryService {
         categories.add(personalCare);
     }
 
-    public List<com.zs.assignment3.model.Category> getAllCategories() {
+    public List<Category> getAllCategories() {
         return categories;
     }
 
@@ -36,7 +36,7 @@ public class CategoryService {
         return category;
     }
 
-    public com.zs.assignment3.model.SubCategory addSubCategory(String categoryName, String subCategoryName, String description) {
+    public SubCategory addSubCategory(String categoryName, String subCategoryName, String description) {
         for (Category category : categories) {
             if (category.getName().equalsIgnoreCase(categoryName)) {
                 SubCategory subCategory = new SubCategory(category.getSubCategories().size() + 1, subCategoryName, description);
@@ -47,7 +47,7 @@ public class CategoryService {
         return null;
     }
 
-    public com.zs.assignment3.model.Category findCategory(String name) {
+    public Category findCategory(String name) {
         for (Category category : categories) {
             if (category.getName().equalsIgnoreCase(name)) {
                 return category;
