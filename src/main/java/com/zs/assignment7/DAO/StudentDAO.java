@@ -1,18 +1,24 @@
 package com.zs.assignment7.DAO;
+
 import com.zs.assignment7.util.DataBaseCoonection;
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+
 import com.zs.assignment7.model.Student;
+
 import java.util.List;
+
 public class StudentDAO {
     private static final Logger logger =
             LoggerFactory.getLogger(StudentDAO.class);
+
     public void createTables() {
 
         String studentTable = """
@@ -55,79 +61,60 @@ public class StudentDAO {
             logger.error("Error creating tables", e);
         }
     }
-    public void insertDepartments(){
-        String sql= """
+
+    public void insertDepartments() {
+        String sql = """
                 INSERT INTO departments (dept_name)
                 VALUES ('CS') , ('EE'), ('Mech')
                 ON CONFLICT (dept_name) DO NOTHING""";
-        try(Connection connection=DataBaseCoonection.getConnection();
-            Statement statement=connection.createStatement())
-        {
+        try (Connection connection = DataBaseCoonection.getConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql);
             logger.info("Department names inserted ");
-        }
-        catch (Exception e){
-            logger.error("Error in inserting the departments ",e);
+        } catch (Exception e) {
+            logger.error("Error in inserting the departments ", e);
         }
 
     }
 
-/*public void loadStudentsCSV(String filePath){
-        String sql="COPY students " + "FROM STDIN "+ "DELIMITER ',' " + "CSV";
-
-    try(Connection connection=DataBaseCoonection.getConnection()){
-        CopyManager copyManager= new CopyManager(connection.unwrap(BaseConnection.class));
-        FileReader reader=new FileReader(filePath);
-        long rows=copyManager.copyIn(sql,reader);
-        logger.info("{} students loaded into database",rows);
-    } catch (Exception e) {
-        logger.error("Error in loading the CSV file");
-    }
-
-
-    }*/
-    public void insertStudents(List<Student> students){
-        String sql= """
+    public void insertStudents(List<Student> students) {
+        String sql = """
                 INSERT INTO students (id, first_name, last_name, mobile) VALUES (?,?,?,?)""";
 
-        try(Connection connection=DataBaseCoonection.getConnection();
-            PreparedStatement ps=connection.prepareStatement(sql)){
+        try (Connection connection = DataBaseCoonection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             connection.setAutoCommit(false);
-            for(Student student : students){
-                ps.setString(1,student.getId());
-                ps.setString(2,student.getFirstName());
-                ps.setString(3,student.getLastName());
-                ps.setString(4,student.getMobile());
+            for (Student student : students) {
+                ps.setString(1, student.getId());
+                ps.setString(2, student.getFirstName());
+                ps.setString(3, student.getLastName());
+                ps.setString(4, student.getMobile());
                 ps.addBatch();
             }
             ps.executeBatch();
             connection.commit();
             ps.clearBatch();
 
-            }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.error("Error in inserting the batch", e);
-        }}
-    public void assignDepartments(){
+        }
+    }
+
+    public void assignDepartments() {
         String sql = """
                 INSERT INTO student_department (student_id ,dept_id)
                 SELECT id, FLOOR(random()*3+1) :: INT FROM students;
                 """;
-        try(Connection connection=DataBaseCoonection.getConnection();
-            Statement statement=connection.createStatement())
-        {
+        try (Connection connection = DataBaseCoonection.getConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql);
             logger.info("Departments assigned to the students and inserted in the Mapping Table ");
+        } catch (Exception e) {
+            logger.error("Error in assigning the departments ", e);
         }
-        catch (Exception e){
-            logger.error("Error in assigning the departments ",e);
-        }
-
-
-
     }
-
 }
+
 
 
 

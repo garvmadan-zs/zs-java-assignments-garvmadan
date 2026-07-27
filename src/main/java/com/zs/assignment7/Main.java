@@ -1,4 +1,5 @@
 package com.zs.assignment7;
+
 import com.zs.assignment7.DAO.ExportDAO;
 import com.zs.assignment7.controller.ExportController;
 import com.zs.assignment7.controller.StudentController;
@@ -15,19 +16,19 @@ public class Main {
 
 
     public static void main(String[] args) {
-        ExportDAO exportDAO=new ExportDAO();
-        StudentExportService exportService=new StudentExportService(exportDAO);
-        ExportController exportController=new ExportController(exportService);
+        ExportDAO exportDAO = new ExportDAO();
+        StudentExportService exportService = new StudentExportService(exportDAO);
+        ExportController exportController = new ExportController(exportService);
         logger.info("Application Started");
-        StudentDAO dao= new StudentDAO();
+        StudentDAO dao = new StudentDAO();
         dao.createTables();
         dao.insertDepartments();
-        StudentDAO studentDAO =new StudentDAO();
-        StudentService generator=new StudentService(studentDAO);
-        StudentController studentController=new StudentController(generator);
+        StudentDAO studentDAO = new StudentDAO();
+        StudentService generator = new StudentService(studentDAO);
+        StudentController studentController = new StudentController(generator);
         studentController.generateStudents(1_000_000);
         studentController.assignDepartments();
         exportController.exportStudents("student_departments.csv");
-        CompressUtil.compressFile("student_departments.csv","student_departments_compressed.csv.gz");
+        CompressUtil.compressFile("student_departments.csv", "student_departments_compressed.csv.gz");
     }
 }
