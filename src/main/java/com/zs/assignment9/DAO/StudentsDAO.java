@@ -1,7 +1,7 @@
 package com.zs.assignment9.DAO;
 import com.zs.assignment7.DAO.StudentDAO;
 import com.zs.assignment7.model.Student;
-import com.zs.assignment7.util.DataBaseCoonection;
+import com.zs.assignment7.config.Database;
 import com.zs.assignment9.exception.StudentNotFound;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ public class StudentsDAO {
         String sql = """
                 INSERT INTO students (id, first_name, last_name, mobile) VALUES (?,?,?,?)""";
 
-        try (Connection connection = DataBaseCoonection.getConnection();
+        try (Connection connection = Database.getDataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
                 ps.setString(1, student.getId());
@@ -41,7 +41,7 @@ public class StudentsDAO {
                 SELECT s.id, s.first_name, s.last_name, s.mobile
                 FROM students s
                 WHERE s.id= ? """;
-       try (Connection connection = DataBaseCoonection.getConnection();
+       try (Connection connection = Database.getDataSource().getConnection();
             PreparedStatement ps = connection.prepareStatement(sql)) {
 
            ps.setString(1, studentId);

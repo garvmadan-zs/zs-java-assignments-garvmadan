@@ -28,4 +28,14 @@ public class Student {
     public String getMobile() {
         return mobile;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", mobile='" + mobile + '\'' +
+                '}';
+    }
 }

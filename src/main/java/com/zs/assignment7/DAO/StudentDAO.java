@@ -1,12 +1,8 @@
 package com.zs.assignment7.DAO;
 
-import com.zs.assignment7.util.DataBaseCoonection;
-import org.postgresql.copy.CopyManager;
-import org.postgresql.core.BaseConnection;
+import com.zs.assignment7.config.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -45,7 +41,7 @@ public class StudentDAO {
                 );
                 """;
 
-        try (Connection connection = DataBaseCoonection.getConnection();
+        try (Connection connection = Database.getDataSource().getConnection();
              Statement statement = connection.createStatement()) {
 
             statement.execute(studentTable);
@@ -67,7 +63,7 @@ public class StudentDAO {
                 INSERT INTO departments (dept_name)
                 VALUES ('CS') , ('EE'), ('Mech')
                 ON CONFLICT (dept_name) DO NOTHING""";
-        try (Connection connection = DataBaseCoonection.getConnection();
+        try (Connection connection = Database.getDataSource().getConnection();
              Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql);
             logger.info("Department names inserted ");
@@ -81,7 +77,7 @@ public class StudentDAO {
         String sql = """
                 INSERT INTO students (id, first_name, last_name, mobile) VALUES (?,?,?,?)""";
 
-        try (Connection connection = DataBaseCoonection.getConnection();
+        try (Connection connection = Database.getDataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             connection.setAutoCommit(false);
             for (Student student : students) {
@@ -102,10 +98,17 @@ public class StudentDAO {
 
     public void assignDepartments() {
         String sql = """
-                INSERT INTO student_department (student_id ,dept_id)
-                SELECT id, FLOOR(random()*3+1) :: INT FROM students;
+               
+               INSERT INTO student_department (student_id, dept_id)
+               SELECT s.id,
+                      (SELECT dept_id
+                       FROM departments
+                       ORDER BY random()
+                       LIMIT 1):: INT
+               FROM students s
+               ON CONFLICT(student_id) DO NOTHING;
                 """;
-        try (Connection connection = DataBaseCoonection.getConnection();
+        try (Connection connection = Database.getDataSource().getConnection();
              Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql);
             logger.info("Departments assigned to the students and inserted in the Mapping Table ");
