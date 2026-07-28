@@ -60,7 +60,7 @@ public class StudentQueryController {
                         break;
                     case "3":
                         System.out.println("Exiting the Application");
-                        break;
+                       return;
                     default:
                         System.out.println("Invalid option.");
                 }
