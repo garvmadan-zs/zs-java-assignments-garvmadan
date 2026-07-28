@@ -2,7 +2,6 @@ package com.zs.assignment7.DAO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.zs.assignment7.util.DataBaseCoonection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +14,7 @@ public class ExportDAO {
     private static final Logger logger = LoggerFactory.getLogger(ExportDAO.class);
 
     public void exportStudents(String filePath) {
+
         String sql = """
                 SELECT s.id, s.first_name, s.last_name, s.mobile, d.dept_name
                 FROM students s
@@ -22,12 +22,13 @@ public class ExportDAO {
                 ON s.id=sd.student_id
                 JOIN departments d
                 ON sd.dept_id=d.dept_id""";
-        try (Connection connection = DataBaseCoonection.getConnection();
+        try (Connection connection = Database.getDataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              BufferedWriter writer =
                      Files.newBufferedWriter(
                              Paths.get(filePath))) {
             ps.setFetchSize(5000);
+            connection.setAutoCommit(false);
             ResultSet rs =
                     ps.executeQuery();
 
