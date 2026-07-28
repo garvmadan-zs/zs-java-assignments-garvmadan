@@ -35,7 +35,7 @@ class StudentQueryServiceTest {
 
 
 
-    // ---------------- CREATE STUDENT TEST CASES ----------------
+
 
 
 
@@ -268,8 +268,6 @@ class StudentQueryServiceTest {
 
 
 
-
-    // ---------------- GET STUDENT TEST CASES ----------------
 
 
 
