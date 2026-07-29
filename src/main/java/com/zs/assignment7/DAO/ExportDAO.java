@@ -1,5 +1,6 @@
 package com.zs.assignment7.DAO;
 
+import com.zs.assignment7.config.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package com.zs.assignment7.DAO;
+package com.zs.assignment7.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
