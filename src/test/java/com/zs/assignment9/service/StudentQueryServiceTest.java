@@ -34,11 +34,6 @@ class StudentQueryServiceTest {
     private StudentQueryService studentService;
 
 
-
-
-
-
-
     @Test
     void createStudent_shouldInsertStudentSuccessfully() {
 
@@ -54,7 +49,6 @@ class StudentQueryServiceTest {
                 .insertStudents(any(Student.class));
 
     }
-
 
 
     @Test
@@ -100,15 +94,12 @@ class StudentQueryServiceTest {
     }
 
 
-
-
     @Test
     void createStudent_shouldGenerateStudentId() {
 
 
         ArgumentCaptor<Student> captor =
                 ArgumentCaptor.forClass(Student.class);
-
 
 
         studentService.createStudent(
@@ -132,8 +123,6 @@ class StudentQueryServiceTest {
 
 
     }
-
-
 
 
     @Test
@@ -167,15 +156,12 @@ class StudentQueryServiceTest {
     }
 
 
-
-
     @Test
     void createStudent_shouldHandleSingleCharacterName() {
 
 
         ArgumentCaptor<Student> captor =
                 ArgumentCaptor.forClass(Student.class);
-
 
 
         studentService.createStudent(
@@ -185,15 +171,12 @@ class StudentQueryServiceTest {
         );
 
 
-
         verify(studentDAO)
                 .insertStudents(captor.capture());
 
 
-
         Student student =
                 captor.getValue();
-
 
 
         assertTrue(
@@ -204,15 +187,12 @@ class StudentQueryServiceTest {
     }
 
 
-
-
     @Test
     void createStudent_shouldHandleEmptyName() {
 
 
         ArgumentCaptor<Student> captor =
                 ArgumentCaptor.forClass(Student.class);
-
 
 
         studentService.createStudent(
@@ -222,15 +202,12 @@ class StudentQueryServiceTest {
         );
 
 
-
         verify(studentDAO)
                 .insertStudents(captor.capture());
 
 
-
         Student student =
                 captor.getValue();
-
 
 
         assertTrue(
@@ -241,8 +218,6 @@ class StudentQueryServiceTest {
     }
 
 
-
-
     @Test
     void createStudent_shouldHandleDaoFailure() {
 
@@ -250,7 +225,6 @@ class StudentQueryServiceTest {
         doThrow(new RuntimeException())
                 .when(studentDAO)
                 .insertStudents(any(Student.class));
-
 
 
         assertThrows(
@@ -266,15 +240,9 @@ class StudentQueryServiceTest {
     }
 
 
-
-
-
-
-
     @Test
     void getStudent_shouldFindStudentSuccessfully()
             throws StudentNotFound {
-
 
 
         Student student =
@@ -286,16 +254,13 @@ class StudentQueryServiceTest {
                 );
 
 
-
         when(studentDAO.getStudent("JD123456"))
                 .thenReturn(student);
-
 
 
         studentService.getStudent(
                 "JD123456"
         );
-
 
 
         verify(studentDAO)
@@ -304,13 +269,9 @@ class StudentQueryServiceTest {
     }
 
 
-
-
-
     @Test
     void getStudent_shouldHandleStudentNotFound()
             throws StudentNotFound {
-
 
 
         when(studentDAO.getStudent("INVALID"))
@@ -321,7 +282,6 @@ class StudentQueryServiceTest {
                 );
 
 
-
         assertDoesNotThrow(
                 () ->
                         studentService.getStudent(
@@ -330,20 +290,15 @@ class StudentQueryServiceTest {
         );
 
 
-
         verify(studentDAO)
                 .getStudent("INVALID");
 
     }
 
 
-
-
-
     @Test
     void getStudent_shouldPassCorrectIdToDao()
             throws StudentNotFound {
-
 
 
         studentService.getStudent(
@@ -355,9 +310,6 @@ class StudentQueryServiceTest {
                 .getStudent("ABC123");
 
     }
-
-
-
 
 
     @Test
@@ -377,8 +329,6 @@ class StudentQueryServiceTest {
     }
 
 
-
-
     @Test
     void getStudent_shouldHandleEmptyId()
             throws StudentNotFound {
@@ -396,19 +346,15 @@ class StudentQueryServiceTest {
     }
 
 
-
-
     @Test
     void getStudent_shouldPropagateUnexpectedException()
             throws StudentNotFound {
-
 
 
         when(studentDAO.getStudent("ABC"))
                 .thenThrow(
                         new RuntimeException()
                 );
-
 
 
         assertThrows(
