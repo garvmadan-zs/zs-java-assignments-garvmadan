@@ -98,14 +98,14 @@ public class StudentDAO {
 
     public void assignDepartments() {
         String sql = """
-               
-                INSERT INTO student_department (student_id, dept_id)
-               SELECT s.id,
-                      (SELECT id
-                       FROM departments
-                       ORDER BY random()
-                       LIMIT 1)
-               FROM students s;
+                      INSERT INTO student_department (student_id, dept_id)
+                       SELECT s.id,
+                              (SELECT dept_id
+                               FROM departments
+                               ORDER BY random()
+                               LIMIT 1):: INT
+                       FROM students s
+                       ON CONFLICT(student_id) DO NOTHING;
                 """;
         try (Connection connection = Database.getDataSource().getConnection();
              Statement statement = connection.createStatement()) {
