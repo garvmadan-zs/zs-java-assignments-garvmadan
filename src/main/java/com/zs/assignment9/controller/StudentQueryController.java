@@ -41,9 +41,6 @@ public class StudentQueryController {
         }
         studentQueryService.createStudent(firstName,lastName,mobile);
     }
-
-
-
     public void showMenu() {
         StudentMenu menu= new StudentMenu();
         while (true) {
@@ -72,4 +69,5 @@ public class StudentQueryController {
         }
     }
 }
+
 
