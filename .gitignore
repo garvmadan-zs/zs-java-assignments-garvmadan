@@ -1,0 +1,2 @@
+.env.local
+src/main/resources/db.properties
