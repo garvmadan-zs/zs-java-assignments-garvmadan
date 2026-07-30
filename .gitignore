@@ -16,8 +16,6 @@ src/main/java/com/zs/assignment3/ECommApplication.class
 zs-java-assignments-garvmadan.iml
 src/main/java/com/zs/zs.iml
 src/main/logging.xml
-build.gradle
-settings.gradle
 .gradle
 build
 .kotlin
@@ -26,3 +24,4 @@ student_departments.csv
 student_departments_compressed.csv.gz
 .idea/inspectionProfiles/Project_Default.xml
 .env.local
+
