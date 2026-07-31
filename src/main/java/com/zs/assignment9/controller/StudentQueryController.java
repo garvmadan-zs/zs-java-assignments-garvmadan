@@ -1,45 +1,73 @@
 package com.zs.assignment9.controller;
-import com.zs.assignment4.controller.Menu;
-import com.zs.assignment4.services.CatalogService;
-import com.zs.assignment7.DAO.StudentDAO;
-import com.zs.assignment9.DAO.StudentsDAO;
-import com.zs.assignment9.exception.InvalidMobileException;
+import com.zs.assignment7.model.Student;
+import com.zs.assignment9.exception.StudentNotFound;
 import com.zs.assignment9.service.StudentQueryService;
 import com.zs.assignment9.exception.InvalidNameException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Scanner;
 
 public class StudentQueryController {
     private final StudentQueryService studentQueryService;
     private final Scanner scanner;
+    private static final Logger logger =
+            LoggerFactory.getLogger(StudentQueryController.class);
+
 
     public StudentQueryController(Scanner scanner,StudentQueryService studentQueryService) {
         this.scanner = scanner;
         this.studentQueryService = studentQueryService;
     }
     public void getStudent(){
-        System.out.println("Enter the id : ");
+        System.out.print("Enter student id : ");
+
         String studentId = scanner.nextLine();
-        studentQueryService.getStudent(studentId);
+
+        try {
+
+            Student student =
+                    studentQueryService.getStudent(studentId);
+
+            System.out.println(student);
+
+            logger.info("Student fetched successfully.");
+
+        }
+        catch (StudentNotFound e) {
+
+            logger.error(e.getMessage());
+
+        }
+
     }
-    public void insertStudent(){
-        System.out.println("Enter the first name of the student  : ");
-        String firstName=scanner.nextLine();
-        if (!firstName.matches("[A-Za-z ]+")) {
-            throw new InvalidNameException("first name should contain only letters.");
+    public void insertStudent() throws InvalidNameException{
+        try {
+
+            System.out.print("First Name : ");
+
+            String firstName = scanner.nextLine();
+
+            System.out.print("Last Name : ");
+
+            String lastName = scanner.nextLine();
+
+            Student student =
+                    studentQueryService.createStudent(
+                            firstName,
+                            lastName);
+
+            System.out.println(student);
+
+            logger.info("Student inserted successfully.");
+
         }
-        System.out.println("Enter the last name of the student  : ");
-        String lastName=scanner.nextLine();
-        if (!lastName.matches("[A-Za-z ]+")) {
-            throw new InvalidNameException("last name should contain only letters.");
+
+        catch (InvalidNameException e) {
+
+            logger.error(e.getMessage());
+
         }
-        System.out.println("Enter the Mobile number of the student : ");
-        String mobile=scanner.nextLine();
-        if (!mobile.matches("^\\d{10}$")) {
-            throw new InvalidMobileException(
-                    "Mobile number must contain exactly 10 digits."
-            );
-        }
-        studentQueryService.createStudent(firstName,lastName,mobile);
     }
     public void showMenu() {
         StudentMenu menu= new StudentMenu();
@@ -69,5 +97,6 @@ public class StudentQueryController {
         }
     }
 }
+
 
 

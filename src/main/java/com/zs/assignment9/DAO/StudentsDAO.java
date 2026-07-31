@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class StudentsDAO {
+public class StudentsDao implements StudentDaoInterface {
     private static final Logger logger =
             LoggerFactory.getLogger(StudentDAO.class);
 
@@ -67,4 +67,5 @@ public class StudentsDAO {
        throw new StudentNotFound("Student not found with ID: " + studentId);
    }
 }
+
 

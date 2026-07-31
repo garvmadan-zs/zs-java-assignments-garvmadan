@@ -1,54 +1,101 @@
 package com.zs.assignment9.service;
+
 import com.zs.assignment7.model.Student;
-import com.zs.assignment9.DAO.StudentsDAO;
+import com.zs.assignment9.DAO.StudentsDao;
+import com.zs.assignment9.exception.InvalidNameException;
 import com.zs.assignment9.exception.StudentNotFound;
 
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class StudentQueryService {
-    private final StudentsDAO studentDAO;
-    final int sequence=1000000;
-    public StudentQueryService(StudentsDAO studentDAO) {
-        this.studentDAO = studentDAO;
 
+    private final StudentsDao studentDAO;
+
+    private final AtomicInteger sequence =
+            new AtomicInteger(1000000);
+
+    public StudentQueryService(StudentsDao studentDAO) {
+        this.studentDAO = studentDAO;
     }
+
+    private void validateName(String name, String fieldName)
+            throws InvalidNameException {
+
+        if (name == null || name.trim().isEmpty()) {
+            throw new InvalidNameException(
+                    fieldName + " cannot be empty");
+        }
+
+        if (!name.matches("[A-Za-z ]+")) {
+            throw new InvalidNameException(
+                    fieldName + " should contain only letters");
+        }
+    }
+
     private String getPrefix(String name) {
-        name = name.replaceAll("[^a-zA-Z]", "");
+
+        name = name.replaceAll("[^A-Za-z]", "");
+
         if (name.length() >= 2) {
             return name.substring(0, 2).toUpperCase();
-        } else if (name.length() == 1) {
+        }
+
+        if (name.length() == 1) {
             return (name + "X").toUpperCase();
         }
+
         return "XX";
     }
 
-    private String generateStudentId(String firstName, String lastName, int sequence) {
+    private String generateStudentId(
+            String firstName,
+            String lastName) {
+
         String first = getPrefix(firstName);
+
         String last = getPrefix(lastName);
-        String number = String.format("%08d", sequence);
-        int random = ThreadLocalRandom.current().nextInt(
-                1000,
-                10000);
-        sequence++;
-        System.out.println("The generated id is : " + first+last+number+random);
+
+        String number = String.format(
+                "%08d",
+                sequence.getAndIncrement());
+
+        int random =
+                ThreadLocalRandom.current()
+                        .nextInt(1000,10000);
+
         return first + last + number + random;
-
     }
 
-    public void createStudent(String first_name, String last_name,String mobile){
-        Student student =new Student(generateStudentId(first_name,last_name,sequence),first_name,last_name,mobile);
+    public Student createStudent(
+            String firstName,
+            String lastName)
+            throws InvalidNameException {
+
+        validateName(firstName,"First name");
+        validateName(lastName,"Last name");
+
+        Student student =
+                new Student(
+                        generateStudentId(firstName,lastName),
+                        firstName,
+                        lastName,
+                        null
+                );
+
         studentDAO.insertStudents(student);
-    }
-    public void getStudent(String id){
-        try{
-            Student student=studentDAO.getStudent(id);
-            System.out.println(student);
 
-        }
-        catch(StudentNotFound e){
-            System.out.println(e);
-        }
-
+        return student;
     }
 
+    public Student getStudent(String id)
+            throws StudentNotFound {
+
+        if(id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Student id cannot be empty");
+        }
+
+        return studentDAO.getStudent(id);
+    }
 }
