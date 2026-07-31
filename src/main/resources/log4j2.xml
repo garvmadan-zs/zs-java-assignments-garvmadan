@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="WARN">
+
+
+    <Properties>
+
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS}
+            %-5level
+            [%t]
+            %c{1}
+            -
+            %msg%n
+        </Property>
+
+    </Properties>
+
+
+    <Appenders>
+
+
+        <Console name="Console">
+
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+
+        </Console>
+
+
+        <RollingFile
+                name="File"
+                fileName="logs/application.log"
+                filePattern="logs/application-%d{yyyy-MM-dd}.log.gz">
+
+
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+
+
+            <Policies>
+
+                <TimeBasedTriggeringPolicy/>
+
+            </Policies>
+
+
+        </RollingFile>
+
+
+    </Appenders>
+
+
+
+    <Loggers>
+
+
+        <Root level="INFO">
+
+            <AppenderRef ref="Console"/>
+
+            <AppenderRef ref="File"/>
+
+        </Root>
+
+
+        <Logger
+                name="com.example.productservice"
+                level="DEBUG"
+                additivity="false">
+
+            <AppenderRef ref="Console"/>
+
+            <AppenderRef ref="File"/>
+
+        </Logger>
+
+
+    </Loggers>
+
+
+</Configuration>
