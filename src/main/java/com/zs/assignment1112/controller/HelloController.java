@@ -1,21 +1,27 @@
 package com.zs.assignment1112.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class HelloController {
 
-    private static final Logger logger= LoggerFactory.getLogger(HelloController.class);
+    private static final Logger log =
+            LogManager.getLogger(HelloController.class);
 
     @GetMapping("/hello")
-    public String hello(){
-        logger.info("Hello World API recieved ");
-        return "Application is running";
-    }
+    public ResponseEntity<String> hello() {
 
+        log.info("Hello API called");
+
+        return ResponseEntity.ok(
+                "Application is running"
+        );
+    }
 }
+

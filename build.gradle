@@ -1,11 +1,11 @@
 plugins {
-    id('java')
-    id("org.springframework.boot") version "4.1.0"
-    id("io.spring.dependency-management") version "1.1.7"
+    id 'java'
+    id 'org.springframework.boot' version '3.5.0'   // or your desired 3.x version
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = "com.zs"
-version = "0.0.1-SNAPSHOT"
+group = 'com.zs'
+version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
@@ -17,49 +17,26 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-webmvc")
-    runtimeOnly("org.postgresql:postgresql")
-    testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
-    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    // Environment variables
-    implementation 'io.github.cdimascio:java-dotenv:5.2.2'
-    implementation('org.springframework.boot:spring-boot-starter-web') {
-        exclude group: 'org.springframework.boot',
-                module: 'spring-boot-starter-logging'
-    }
-
-    implementation('org.springframework.boot:spring-boot-starter-data-jpa') {
-        exclude group: 'org.springframework.boot',
-                module: 'spring-boot-starter-logging'
-    }
-
-    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-
-    implementation 'org.apache.logging.log4j:log4j-slf4j2-impl'
-
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-
-    runtimeOnly 'org.postgresql:postgresql'
-
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-
-    // Log4j2 (only if you specifically want Log4j2 instead of Spring Boot's default Logback)
-    implementation platform('org.apache.logging.log4j:log4j-bom:2.25.4')
-    implementation 'org.apache.logging.log4j:log4j-api'
-    runtimeOnly 'org.apache.logging.log4j:log4j-core'
-}
 configurations {
     all {
-        exclude group: 'org.springframework.boot',
-                module: 'spring-boot-starter-logging'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
 }
 
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+    implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testRuntimeOnly("com.h2database:h2")
+}
 tasks.named('test') {
     useJUnitPlatform()
 }
