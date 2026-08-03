@@ -1,24 +1,29 @@
 package com.zs.assignment9.service;
 
 import com.zs.assignment7.model.Student;
-import com.zs.assignment9.DAO.StudentsDao;
+import com.zs.assignment9.DAO.StudentDaoInterface;
+import com.zs.assignment9.exception.DatabaseException;
 import com.zs.assignment9.exception.InvalidNameException;
 import com.zs.assignment9.exception.StudentNotFound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class StudentQueryServiceTest {
-
-    private StudentsDao studentDAO;
     private StudentQueryService studentQueryService;
+    @Mock
+    private StudentDaoInterface studentDAO;
+
 
     @BeforeEach
     void setUp() {
-        studentDAO = mock(StudentsDao.class);
+        studentDAO = mock(StudentDaoInterface.class);
         studentQueryService = new StudentQueryService(studentDAO);
     }
 
@@ -207,4 +212,52 @@ class StudentQueryServiceTest {
         assertEquals("Smith", captured.getLastName());
         assertNotNull(captured.getId());
     }
+
+    @Test
+    void createStudent_shouldSurfaceDatabaseFailure() {
+
+        StudentDaoInterface dao =
+                mock(StudentDaoInterface.class);
+
+        doThrow(new DatabaseException(
+                "DB unavailable",
+                new SQLException()
+        ))
+                .when(dao)
+                .insertStudents(any(Student.class));
+
+        StudentQueryService service =
+                new StudentQueryService(dao);
+
+
+        assertThrows(
+                DatabaseException.class,
+                () -> service.createStudent(
+                        "John",
+                        "Smith"
+                )
+        );
+    }
+
+    @Test
+    void getStudent_shouldReturnNotFoundOnlyWhenNoStudentExists()
+            throws StudentNotFound {
+
+        StudentDaoInterface dao =
+                mock(StudentDaoInterface.class);
+
+        when(dao.getStudent("123"))
+                .thenThrow(new StudentNotFound(
+                        "Student not found"
+                ));
+
+        StudentQueryService service =
+                new StudentQueryService(dao);
+
+        assertThrows(
+                StudentNotFound.class,
+                () -> service.getStudent("123")
+        );
+    }
+
 }

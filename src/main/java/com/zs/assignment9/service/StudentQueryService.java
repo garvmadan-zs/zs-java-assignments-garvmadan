@@ -1,7 +1,7 @@
 package com.zs.assignment9.service;
 
 import com.zs.assignment7.model.Student;
-import com.zs.assignment9.DAO.StudentsDao;
+import com.zs.assignment9.DAO.StudentDaoInterface;
 import com.zs.assignment9.exception.InvalidNameException;
 import com.zs.assignment9.exception.StudentNotFound;
 
@@ -10,12 +10,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class StudentQueryService {
 
-    private final StudentsDao studentDAO;
+    private final StudentDaoInterface studentDAO;
 
     private final AtomicInteger sequence =
             new AtomicInteger(1000000);
 
-    public StudentQueryService(StudentsDao studentDAO) {
+    public StudentQueryService(StudentDaoInterface studentDAO) {
         this.studentDAO = studentDAO;
     }
 
@@ -62,7 +62,7 @@ public class StudentQueryService {
 
         int random =
                 ThreadLocalRandom.current()
-                        .nextInt(1000,10000);
+                        .nextInt(1000, 10000);
 
         return first + last + number + random;
     }
@@ -72,12 +72,12 @@ public class StudentQueryService {
             String lastName)
             throws InvalidNameException {
 
-        validateName(firstName,"First name");
-        validateName(lastName,"Last name");
+        validateName(firstName, "First name");
+        validateName(lastName, "Last name");
 
         Student student =
                 new Student(
-                        generateStudentId(firstName,lastName),
+                        generateStudentId(firstName, lastName),
                         firstName,
                         lastName,
                         null
@@ -91,7 +91,7 @@ public class StudentQueryService {
     public Student getStudent(String id)
             throws StudentNotFound {
 
-        if(id == null || id.trim().isEmpty()) {
+        if (id == null || id.trim().isEmpty()) {
             throw new IllegalArgumentException(
                     "Student id cannot be empty");
         }
