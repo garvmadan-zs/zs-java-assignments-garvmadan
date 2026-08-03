@@ -5,12 +5,8 @@ import com.zs.assignment10.service.ProductService;
 import com.zs.assignment4.controller.Menu;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-
 import java.util.List;
 import java.util.Scanner;
-
-
-
 
 public class ProductController {
     private final ProductService productService;
@@ -63,9 +59,4 @@ public class ProductController {
         int id=sc.nextInt();
         System.out.println(productService.exists(id));
     }
-
-
-
-
-
 }
