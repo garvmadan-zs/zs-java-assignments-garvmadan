@@ -1,1 +1,4 @@
-rootProject.name = "assignment1112.main"
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+rootProject.name = 'zs-java-assignments-garvmadan'
