@@ -214,7 +214,7 @@ class StudentQueryServiceTest {
     @Test
     void createStudent_shouldInsertExactlyCapturedStudent() {
         try {
-            studentQueryService.createStudent("Alex", "Smith");
+            studentQueryService.createStudent("John", "Doe");
 
             ArgumentCaptor<Student> captor =
                     ArgumentCaptor.forClass(Student.class);
@@ -223,8 +223,8 @@ class StudentQueryServiceTest {
 
             Student captured = captor.getValue();
 
-            assertEquals("Alex", captured.getFirstName());
-            assertEquals("Smith", captured.getLastName());
+            assertEquals("John", captured.getFirstName());
+            assertEquals("Doe", captured.getLastName());
             assertNotNull(captured.getId());
         } catch (InvalidNameException e) {
             fail("Unexpected InvalidNameException: " + e.getMessage());
@@ -253,7 +253,7 @@ class StudentQueryServiceTest {
                 DatabaseException.class,
                 () -> service.createStudent(
                         "John",
-                        "Smith"
+                        "Doe"
                 )
         );
     }
