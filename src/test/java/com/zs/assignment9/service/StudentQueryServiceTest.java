@@ -4,11 +4,13 @@ import com.zs.assignment7.model.Student;
 import com.zs.assignment9.DAO.StudentDaoInterface;
 import com.zs.assignment9.exception.DatabaseException;
 import com.zs.assignment9.exception.InvalidNameException;
-import com.zs.assignment9.exception.StudentNotFound;
+import com.zs.assignment9.exception.StudentNotFoundException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import java.sql.SQLException;
 
@@ -16,65 +18,76 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class StudentQueryServiceTest {
-    private StudentQueryService studentQueryService;
+    private static StudentQueryService studentQueryService;
     @Mock
-    private StudentDaoInterface studentDAO;
+    private static StudentDaoInterface studentDAO;
 
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
         studentDAO = mock(StudentDaoInterface.class);
         studentQueryService = new StudentQueryService(studentDAO);
     }
-
-    @Test
-    void createStudent_shouldCreateStudentSuccessfully() throws InvalidNameException {
-
-        Student student = studentQueryService.createStudent("John", "Doe");
-
-        assertNotNull(student);
-        assertEquals("John", student.getFirstName());
-        assertEquals("Doe", student.getLastName());
-        assertNotNull(student.getId());
-
-        verify(studentDAO).insertStudents(student);
-        verifyNoMoreInteractions(studentDAO);
+    @BeforeEach
+    void resetMocks() {
+        Mockito.reset(studentDAO);
     }
-
     @Test
-    void createStudent_shouldGenerateUniqueIds() throws InvalidNameException {
+    void createStudent_shouldCreateStudentSuccessfully() {
+        try {
+            Student student = studentQueryService.createStudent("John", "Doe");
 
-        Student student1 = studentQueryService.createStudent("John", "Doe");
-        Student student2 = studentQueryService.createStudent("John", "Doe");
+            assertNotNull(student);
+            assertEquals("John", student.getFirstName());
+            assertEquals("Doe", student.getLastName());
+            assertNotNull(student.getId());
 
-        assertNotEquals(student1.getId(), student2.getId());
-
-        verify(studentDAO, times(2)).insertStudents(any(Student.class));
-        verifyNoMoreInteractions(studentDAO);
+            verify(studentDAO).insertStudents(student);
+            verifyNoMoreInteractions(studentDAO);
+        } catch (InvalidNameException e) {
+            fail("Unexpected InvalidNameException: " + e.getMessage());
+        }
     }
-
     @Test
-    void createStudent_shouldGenerateCorrectPrefixes() throws InvalidNameException {
+    void createStudent_shouldGenerateUniqueIds() {
+        try {
+            Student student1 = studentQueryService.createStudent("John", "Doe");
+            Student student2 = studentQueryService.createStudent("John", "Doe");
 
-        studentQueryService.createStudent("John", "Doe");
+            assertNotEquals(student1.getId(), student2.getId());
 
-        ArgumentCaptor<Student> captor = ArgumentCaptor.forClass(Student.class);
-
-        verify(studentDAO).insertStudents(captor.capture());
-
-        Student captured = captor.getValue();
-
-        assertTrue(captured.getId().startsWith("JODO"));
+            verify(studentDAO, times(2)).insertStudents(any(Student.class));
+            verifyNoMoreInteractions(studentDAO);
+        } catch (InvalidNameException e) {
+            fail("Unexpected InvalidNameException: " + e.getMessage());
+        }
     }
-
     @Test
-    void createStudent_shouldPadSingleCharacterNames() throws InvalidNameException {
+    void createStudent_shouldGenerateCorrectPrefixes() {
+        try {
+            studentQueryService.createStudent("John", "Doe");
 
-        Student student = studentQueryService.createStudent("A", "B");
+            ArgumentCaptor<Student> captor = ArgumentCaptor.forClass(Student.class);
 
-        assertTrue(student.getId().startsWith("AXBX"));
+            verify(studentDAO).insertStudents(captor.capture());
+
+            Student captured = captor.getValue();
+
+            assertTrue(captured.getId().startsWith("JODO"));
+        } catch (InvalidNameException e) {
+            fail("Unexpected InvalidNameException: " + e.getMessage());
+        }
     }
+    @Test
+    void createStudent_shouldPadSingleCharacterNames() {
+        try {
+            Student student = studentQueryService.createStudent("A", "B");
 
+            assertTrue(student.getId().startsWith("AXBX"));
+        } catch (InvalidNameException e) {
+            fail("Unexpected InvalidNameException: " + e.getMessage());
+        }
+    }
     @Test
     void createStudent_shouldRejectNullFirstName() {
 
@@ -140,33 +153,35 @@ class StudentQueryServiceTest {
 
         verifyNoInteractions(studentDAO);
     }
-
     @Test
-    void getStudent_shouldReturnStudent() throws StudentNotFound {
+    void getStudent_shouldReturnStudent() {
+        try {
+            Student expected =
+                    new Student("JODO010000001234", "John", "Doe", null);
 
-        Student expected =
-                new Student("JODO010000001234", "John", "Doe", null);
+            when(studentDAO.getStudent(expected.getId()))
+                    .thenReturn(expected);
 
-        when(studentDAO.getStudent(expected.getId()))
-                .thenReturn(expected);
+            Student actual =
+                    studentQueryService.getStudent(expected.getId());
 
-        Student actual =
-                studentQueryService.getStudent(expected.getId());
+            assertSame(expected, actual);
 
-        assertSame(expected, actual);
-
-        verify(studentDAO).getStudent(expected.getId());
-        verifyNoMoreInteractions(studentDAO);
+            verify(studentDAO).getStudent(expected.getId());
+            verifyNoMoreInteractions(studentDAO);
+        } catch (StudentNotFoundException e) {
+            fail("Unexpected StudentNotFound: " + e.getMessage());
+        }
     }
 
     @Test
-    void getStudent_shouldThrowStudentNotFound() throws StudentNotFound {
+    void getStudent_shouldThrowStudentNotFound() throws StudentNotFoundException {
 
         when(studentDAO.getStudent("INVALID"))
-                .thenThrow(new StudentNotFound("Student not found"));
+                .thenThrow(new StudentNotFoundException("Student not found"));
 
         assertThrows(
-                StudentNotFound.class,
+                StudentNotFoundException.class,
                 () -> studentQueryService.getStudent("INVALID")
         );
 
@@ -197,21 +212,25 @@ class StudentQueryServiceTest {
     }
 
     @Test
-    void createStudent_shouldInsertExactlyCapturedStudent() throws InvalidNameException {
+    void createStudent_shouldInsertExactlyCapturedStudent() {
+        try {
+            studentQueryService.createStudent("Alex", "Smith");
 
-        studentQueryService.createStudent("Alex", "Smith");
+            ArgumentCaptor<Student> captor =
+                    ArgumentCaptor.forClass(Student.class);
 
-        ArgumentCaptor<Student> captor =
-                ArgumentCaptor.forClass(Student.class);
+            verify(studentDAO).insertStudents(captor.capture());
 
-        verify(studentDAO).insertStudents(captor.capture());
+            Student captured = captor.getValue();
 
-        Student captured = captor.getValue();
-
-        assertEquals("Alex", captured.getFirstName());
-        assertEquals("Smith", captured.getLastName());
-        assertNotNull(captured.getId());
+            assertEquals("Alex", captured.getFirstName());
+            assertEquals("Smith", captured.getLastName());
+            assertNotNull(captured.getId());
+        } catch (InvalidNameException e) {
+            fail("Unexpected InvalidNameException: " + e.getMessage());
+        }
     }
+
 
     @Test
     void createStudent_shouldSurfaceDatabaseFailure() {
@@ -238,16 +257,15 @@ class StudentQueryServiceTest {
                 )
         );
     }
-
     @Test
     void getStudent_shouldReturnNotFoundOnlyWhenNoStudentExists()
-            throws StudentNotFound {
+            throws StudentNotFoundException {
 
         StudentDaoInterface dao =
                 mock(StudentDaoInterface.class);
 
         when(dao.getStudent("123"))
-                .thenThrow(new StudentNotFound(
+                .thenThrow(new StudentNotFoundException(
                         "Student not found"
                 ));
 
@@ -255,9 +273,8 @@ class StudentQueryServiceTest {
                 new StudentQueryService(dao);
 
         assertThrows(
-                StudentNotFound.class,
+                StudentNotFoundException.class,
                 () -> service.getStudent("123")
         );
     }
-
 }
