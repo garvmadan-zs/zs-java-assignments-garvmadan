@@ -1,6 +1,7 @@
 .idea/*.iml
 .idea/*.xml
-
+.idea
+logs
 src/main/java/com/zs/assignment-zero/readme.md
 src/main/java/com/zs/assignment3/controller/AdminController.class
 src/main/java/com/zs/assignment3/controller/CustomerController.class
