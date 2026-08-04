@@ -1,16 +1,18 @@
 package com.zs.assignment10.controller;
 
-import com.zs.assignment10.DAO.DaoImplementation;
-import com.zs.assignment10.service.ProductService;
 
-import javax.swing.plaf.PanelUI;
+import com.zs.assignment10.service.ProductService;
 import java.util.Scanner;
 
 public class Menu {
-    private final Scanner scanner;
 
-    public  Menu(Scanner scanner){
-        this.scanner=scanner;
+    private final Scanner scanner;
+    private final ProductService productService;
+
+    public Menu(Scanner scanner, ProductService productService){
+
+        this.scanner = scanner;
+        this.productService = productService;
     }
     public void showMenu(){
         System.out.println("=======Assignment 10 Menu========");
@@ -24,9 +26,10 @@ public class Menu {
         System.out.println("Enter your choice");
     }
     public void choiceEntry(){
-        DaoImplementation daoImplementation=new DaoImplementation();
-        ProductService productService=new ProductService(daoImplementation);
-         ProductController productController=new ProductController(productService);
+
+
+        ProductController productController =
+                new ProductController(productService);
         while (true) {
             showMenu();
             String choice = scanner.nextLine().trim();
@@ -36,19 +39,19 @@ public class Menu {
                         productController.findAll();
                         break;
                     case "2":
-                        productController.findById();
+                        productController.findById(scanner);
                         break;
                     case "3":
-                        productController.insertProduct();
+                        productController.insertProduct(scanner);
                         break;
                     case "4":
-                        productController.updateProduct();
+                        productController.updateProduct(scanner);
                         break;
                     case "5":
-                        productController.deleteProduct();
+                        productController.deleteProductMenu(scanner);
                         break;
                     case "6":
-                        productController.exists();
+                        productController.exists(scanner);
                         break;
                     case "7" :
                         System.out.println("Exiting......");
