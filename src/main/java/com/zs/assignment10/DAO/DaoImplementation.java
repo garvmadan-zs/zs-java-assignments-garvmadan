@@ -51,7 +51,7 @@ public class DaoImplementation implements DaoInterface{
             while(resultSet.next()){
                 Product product=new Product(resultSet.getString("name"),
                         resultSet.getInt("id"),
-                        resultSet.getLong("price"),
+                        resultSet.getDouble("price"),
                         resultSet.getInt("quantity"));
                 products.add(product);
             }
@@ -74,7 +74,7 @@ public class DaoImplementation implements DaoInterface{
            statement.setInt(1,id);
            ResultSet resultSet=statement.executeQuery();
            if(resultSet.next()){
-               product=new Product(resultSet.getString("name"),resultSet.getInt("id"),resultSet.getLong("price"),resultSet.getInt("quantity"));
+               product=new Product(resultSet.getString("name"),resultSet.getInt("id"),resultSet.getDouble("price"),resultSet.getInt("quantity"));
                 logger.info("Product fetched successfully");
                 return product;
            }
