@@ -24,5 +24,7 @@ student_departments.csv
 student_departments_compressed.csv.gz
 .idea/inspectionProfiles/Project_Default.xml
 .env.local
+
 src/main/resources/db.properties
+gradle
 
