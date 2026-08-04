@@ -1,6 +1,6 @@
 package com.zs.assignment9.controller;
 import com.zs.assignment7.model.Student;
-import com.zs.assignment9.exception.StudentNotFound;
+import com.zs.assignment9.exception.StudentNotFoundException;
 import com.zs.assignment9.service.StudentQueryService;
 import com.zs.assignment9.exception.InvalidNameException;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class StudentQueryController {
             logger.info("Student fetched successfully.");
 
         }
-        catch (StudentNotFound e) {
+        catch (StudentNotFoundException e) {
 
             logger.error(e.getMessage());
 

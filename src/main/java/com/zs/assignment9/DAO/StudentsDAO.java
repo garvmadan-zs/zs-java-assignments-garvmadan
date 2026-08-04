@@ -3,7 +3,7 @@ package com.zs.assignment9.DAO;
 import com.zs.assignment7.config.Database;
 import com.zs.assignment7.model.Student;
 import com.zs.assignment9.exception.DatabaseException;
-import com.zs.assignment9.exception.StudentNotFound;
+import com.zs.assignment9.exception.StudentNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +50,7 @@ public class StudentsDao implements StudentDaoInterface {
 
 
     public Student getStudent(String studentId)
-            throws StudentNotFound {
+            throws StudentNotFoundException {
 
         String sql = """
                 SELECT s.id, s.first_name, s.last_name, s.mobile
@@ -91,7 +91,7 @@ public class StudentsDao implements StudentDaoInterface {
                     e
             );
         }
-        throw new StudentNotFound(
+        throw new StudentNotFoundException(
                 "Student not found with ID: " + studentId
         );
     }

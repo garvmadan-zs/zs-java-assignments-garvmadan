@@ -3,7 +3,7 @@ package com.zs.assignment9.service;
 import com.zs.assignment7.model.Student;
 import com.zs.assignment9.DAO.StudentDaoInterface;
 import com.zs.assignment9.exception.InvalidNameException;
-import com.zs.assignment9.exception.StudentNotFound;
+import com.zs.assignment9.exception.StudentNotFoundException;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -89,7 +89,7 @@ public class StudentQueryService {
     }
 
     public Student getStudent(String id)
-            throws StudentNotFound {
+            throws StudentNotFoundException {
 
         if (id == null || id.trim().isEmpty()) {
             throw new IllegalArgumentException(
