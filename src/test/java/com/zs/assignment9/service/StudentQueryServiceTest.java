@@ -11,24 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-
 import java.sql.SQLException;
+import org.junit.jupiter.api.Assertions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.Mockito.times;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doThrow;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 class StudentQueryServiceTest {
     private static StudentQueryService studentQueryService;
@@ -38,7 +23,7 @@ class StudentQueryServiceTest {
 
     @BeforeAll
     static void setUp() {
-        studentDAO = mock(StudentDaoInterface.class);
+        studentDAO = Mockito.mock(StudentDaoInterface.class);
         studentQueryService = new StudentQueryService(studentDAO);
     }
     @BeforeEach
@@ -50,15 +35,15 @@ class StudentQueryServiceTest {
         try {
             Student student = studentQueryService.createStudent("John", "Doe");
 
-            assertNotNull(student);
-            assertEquals("John", student.getFirstName());
-            assertEquals("Doe", student.getLastName());
-            assertNotNull(student.getId());
+            Assertions.assertNotNull(student);
+            Assertions.assertEquals("John", student.getFirstName());
+            Assertions.assertEquals("Doe", student.getLastName());
+            Assertions.assertNotNull(student.getId());
 
-            verify(studentDAO).insertStudents(student);
-            verifyNoMoreInteractions(studentDAO);
+            Mockito.verify(studentDAO).insertStudents(student);
+            Mockito.verifyNoMoreInteractions(studentDAO);
         } catch (InvalidNameException e) {
-            fail("Unexpected InvalidNameException: " + e.getMessage());
+            Assertions.fail("Unexpected InvalidNameException: " + e.getMessage());
         }
     }
     @Test
@@ -67,12 +52,12 @@ class StudentQueryServiceTest {
             Student student1 = studentQueryService.createStudent("John", "Doe");
             Student student2 = studentQueryService.createStudent("John", "Doe");
 
-            assertNotEquals(student1.getId(), student2.getId());
+            Assertions.assertNotEquals(student1.getId(), student2.getId());
 
-            verify(studentDAO, times(2)).insertStudents(any(Student.class));
-            verifyNoMoreInteractions(studentDAO);
+            Mockito.verify(studentDAO, Mockito.times(2)).insertStudents(Mockito.any(Student.class));
+            Mockito.verifyNoMoreInteractions(studentDAO);
         } catch (InvalidNameException e) {
-            fail("Unexpected InvalidNameException: " + e.getMessage());
+            Assertions.fail("Unexpected InvalidNameException: " + e.getMessage());
         }
     }
     @Test
@@ -82,13 +67,13 @@ class StudentQueryServiceTest {
 
             ArgumentCaptor<Student> captor = ArgumentCaptor.forClass(Student.class);
 
-            verify(studentDAO).insertStudents(captor.capture());
+            Mockito.verify(studentDAO).insertStudents(captor.capture());
 
             Student captured = captor.getValue();
 
-            assertTrue(captured.getId().startsWith("JODO"));
+            Assertions.assertTrue(captured.getId().startsWith("JODO"));
         } catch (InvalidNameException e) {
-            fail("Unexpected InvalidNameException: " + e.getMessage());
+            Assertions.fail("Unexpected InvalidNameException: " + e.getMessage());
         }
     }
     @Test
@@ -96,75 +81,75 @@ class StudentQueryServiceTest {
         try {
             Student student = studentQueryService.createStudent("A", "B");
 
-            assertTrue(student.getId().startsWith("AXBX"));
+            Assertions.assertTrue(student.getId().startsWith("AXBX"));
         } catch (InvalidNameException e) {
-            fail("Unexpected InvalidNameException: " + e.getMessage());
+            Assertions.fail("Unexpected InvalidNameException: " + e.getMessage());
         }
     }
     @Test
     void createStudent_shouldRejectNullFirstName() {
 
-        assertThrows(
+        Assertions.assertThrows(
                 InvalidNameException.class,
                 () -> studentQueryService.createStudent(null, "Doe")
         );
 
-        verifyNoInteractions(studentDAO);
+        Mockito.verifyNoInteractions(studentDAO);
     }
 
     @Test
     void createStudent_shouldRejectNullLastName() {
 
-        assertThrows(
+        Assertions.assertThrows(
                 InvalidNameException.class,
                 () -> studentQueryService.createStudent("John", null)
         );
 
-        verifyNoInteractions(studentDAO);
+        Mockito.verifyNoInteractions(studentDAO);
     }
 
     @Test
     void createStudent_shouldRejectBlankFirstName() {
 
-        assertThrows(
+        Assertions.assertThrows(
                 InvalidNameException.class,
                 () -> studentQueryService.createStudent("   ", "Doe")
         );
 
-        verifyNoInteractions(studentDAO);
+        Mockito.verifyNoInteractions(studentDAO);
     }
 
     @Test
     void createStudent_shouldRejectBlankLastName() {
 
-        assertThrows(
+        Assertions.assertThrows(
                 InvalidNameException.class,
                 () -> studentQueryService.createStudent("John", " ")
         );
 
-        verifyNoInteractions(studentDAO);
+        Mockito.verifyNoInteractions(studentDAO);
     }
 
     @Test
     void createStudent_shouldRejectInvalidFirstName() {
 
-        assertThrows(
+        Assertions.assertThrows(
                 InvalidNameException.class,
                 () -> studentQueryService.createStudent("John123", "Doe")
         );
 
-        verifyNoInteractions(studentDAO);
+        Mockito.verifyNoInteractions(studentDAO);
     }
 
     @Test
     void createStudent_shouldRejectInvalidLastName() {
 
-        assertThrows(
+        Assertions.assertThrows(
                 InvalidNameException.class,
                 () -> studentQueryService.createStudent("John", "Doe@123")
         );
 
-        verifyNoInteractions(studentDAO);
+        Mockito.verifyNoInteractions(studentDAO);
     }
     @Test
     void getStudent_shouldReturnStudent() {
@@ -172,56 +157,56 @@ class StudentQueryServiceTest {
             Student expected =
                     new Student("JODO010000001234", "John", "Doe", null);
 
-            when(studentDAO.getStudent(expected.getId()))
+            Mockito.when(studentDAO.getStudent(expected.getId()))
                     .thenReturn(expected);
 
             Student actual =
                     studentQueryService.getStudent(expected.getId());
 
-            assertSame(expected, actual);
+            Assertions.assertSame(expected, actual);
 
-            verify(studentDAO).getStudent(expected.getId());
-            verifyNoMoreInteractions(studentDAO);
+            Mockito.verify(studentDAO).getStudent(expected.getId());
+            Mockito.verifyNoMoreInteractions(studentDAO);
         } catch (StudentNotFoundException e) {
-            fail("Unexpected StudentNotFound: " + e.getMessage());
+            Assertions.fail("Unexpected StudentNotFound: " + e.getMessage());
         }
     }
 
     @Test
     void getStudent_shouldThrowStudentNotFound() throws StudentNotFoundException {
 
-        when(studentDAO.getStudent("INVALID"))
+        Mockito.when(studentDAO.getStudent("INVALID"))
                 .thenThrow(new StudentNotFoundException("Student not found"));
 
-        assertThrows(
+        Assertions.assertThrows(
                 StudentNotFoundException.class,
                 () -> studentQueryService.getStudent("INVALID")
         );
 
-        verify(studentDAO).getStudent("INVALID");
-        verifyNoMoreInteractions(studentDAO);
+        Mockito.verify(studentDAO).getStudent("INVALID");
+        Mockito.verifyNoMoreInteractions(studentDAO);
     }
 
     @Test
     void getStudent_shouldRejectNullId() {
 
-        assertThrows(
+        Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> studentQueryService.getStudent(null)
         );
 
-        verifyNoInteractions(studentDAO);
+        Mockito.verifyNoInteractions(studentDAO);
     }
 
     @Test
     void getStudent_shouldRejectBlankId() {
 
-        assertThrows(
+        Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> studentQueryService.getStudent(" ")
         );
 
-        verifyNoInteractions(studentDAO);
+        Mockito.verifyNoInteractions(studentDAO);
     }
 
     @Test
@@ -232,15 +217,15 @@ class StudentQueryServiceTest {
             ArgumentCaptor<Student> captor =
                     ArgumentCaptor.forClass(Student.class);
 
-            verify(studentDAO).insertStudents(captor.capture());
+            Mockito.verify(studentDAO).insertStudents(captor.capture());
 
             Student captured = captor.getValue();
 
-            assertEquals("John", captured.getFirstName());
-            assertEquals("Doe", captured.getLastName());
-            assertNotNull(captured.getId());
+            Assertions.assertEquals("John", captured.getFirstName());
+            Assertions.assertEquals("Doe", captured.getLastName());
+            Assertions.assertNotNull(captured.getId());
         } catch (InvalidNameException e) {
-            fail("Unexpected InvalidNameException: " + e.getMessage());
+            Assertions.fail("Unexpected InvalidNameException: " + e.getMessage());
         }
     }
 
@@ -249,20 +234,20 @@ class StudentQueryServiceTest {
     void createStudent_shouldSurfaceDatabaseFailure() {
 
         StudentDaoInterface dao =
-                mock(StudentDaoInterface.class);
+                Mockito.mock(StudentDaoInterface.class);
 
-        doThrow(new DatabaseException(
+        Mockito.doThrow(new DatabaseException(
                 "DB unavailable",
                 new SQLException()
         ))
                 .when(dao)
-                .insertStudents(any(Student.class));
+                .insertStudents(Mockito.any(Student.class));
 
         StudentQueryService service =
                 new StudentQueryService(dao);
 
 
-        assertThrows(
+        Assertions.assertThrows(
                 DatabaseException.class,
                 () -> service.createStudent(
                         "John",
@@ -275,9 +260,9 @@ class StudentQueryServiceTest {
             throws StudentNotFoundException {
 
         StudentDaoInterface dao =
-                mock(StudentDaoInterface.class);
+                Mockito.mock(StudentDaoInterface.class);
 
-        when(dao.getStudent("123"))
+        Mockito.when(dao.getStudent("123"))
                 .thenThrow(new StudentNotFoundException(
                         "Student not found"
                 ));
@@ -285,7 +270,7 @@ class StudentQueryServiceTest {
         StudentQueryService service =
                 new StudentQueryService(dao);
 
-        assertThrows(
+        Assertions.assertThrows(
                 StudentNotFoundException.class,
                 () -> service.getStudent("123")
         );
