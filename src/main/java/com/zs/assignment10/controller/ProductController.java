@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class ProductController {
     private final ProductService productService;
     private static final Logger logger= LoggerFactory.getLogger(ProductController.class);
-    Scanner sc= new Scanner(System.in);
 
     public ProductController(ProductService productService){
         this.productService=productService;

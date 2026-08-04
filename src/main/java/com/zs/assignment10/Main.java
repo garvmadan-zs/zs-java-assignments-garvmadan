@@ -17,8 +17,7 @@ public class Main {
         logger.info("Application Started");
         daoImplementation.createProductTable();
         Scanner scanner = new Scanner(System.in);
-        DaoInterface dao = new DaoImplementation();
-        ProductService service = new ProductService(dao);
+        ProductService service = new ProductService(daoImplementation);
         Menu menu = new Menu(scanner, service);
         menu.showMenu();
         menu.choiceEntry();

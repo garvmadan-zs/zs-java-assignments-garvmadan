@@ -10,7 +10,7 @@ public interface DaoInterface {
     List<Product> findAll();
     Product findById(int id) throws ProductNotFoundException;
     void insertProduct(Product product);
-    void updateProduct(int id, String name,double price,int quantity) throws ProductNotFoundException;;
+    void updateProduct(int id, String name,double price,int quantity) throws ProductNotFoundException;
     void deleteProduct(int id) throws ProductNotFoundException;
-    boolean exists(int id) throws ProductNotFoundException;
+    boolean exists(int id);
 }
