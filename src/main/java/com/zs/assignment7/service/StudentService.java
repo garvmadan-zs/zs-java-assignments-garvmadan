@@ -74,15 +74,10 @@ public class StudentService {
                 "Completed in {} ms",
                 endTime - startTime
         );
-
-
     }
-
-
     public void assignDepartments() {
         studentDAO.assignDepartments();
     }
-
-
 }
+
 
