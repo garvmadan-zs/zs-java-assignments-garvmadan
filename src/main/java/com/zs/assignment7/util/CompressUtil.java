@@ -26,7 +26,6 @@ public class CompressUtil {
         } catch (Exception e) {
             logger.error("The file cannot be found ", e);
         }
-
     }
-
 }
+
