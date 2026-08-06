@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
-import org.mockito.Mockito;
-
 
 class ProductServiceTest {
 

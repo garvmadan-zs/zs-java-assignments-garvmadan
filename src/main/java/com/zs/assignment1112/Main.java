@@ -8,16 +8,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Main {
 
     public static void main(String[] args) {
-        Dotenv dotenv = Dotenv.configure()
-                .filename(".env.local")
-                .ignoreIfMissing()
-                .load();
-
-        System.setProperty("DB_HOST", dotenv.get("DB_HOST"));
-        System.setProperty("DB_NAME", dotenv.get("DB_NAME"));
-        System.setProperty("DB_PORT", dotenv.get("DB_PORT"));
-        System.setProperty("DB_USER", dotenv.get("DB_USER"));
-        System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
+        Dotenv dotenv = Dotenv.configure().filename(".env.local").ignoreIfMissing().load();
+        setPropertyIfPresent(dotenv, "DB_HOST");
+        setPropertyIfPresent(dotenv, "DB_NAME");
+        setPropertyIfPresent(dotenv, "DB_PORT");
+        setPropertyIfPresent(dotenv, "DB_USER");
+        setPropertyIfPresent(dotenv, "DB_PASSWORD");
         SpringApplication.run(Main.class, args);
+    }
+
+    private static void setPropertyIfPresent(Dotenv dotenv, String key) {
+        String value = dotenv.get(key);
+        if (value != null && !value.isBlank()) {
+            System.setProperty(key, value);
+        }
     }
 }

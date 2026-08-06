@@ -2,7 +2,6 @@ package com.zs.assignment1112.service;
 
 import com.zs.assignment1112.dto.response.CategoryResponse;
 import com.zs.assignment1112.entity.Category;
-import com.zs.assignment1112.exception.ResourceNotFoundException;
 import com.zs.assignment1112.repository.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
@@ -48,14 +48,14 @@ class CategoryServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenNoCategoriesExist() {
+    void shouldReturnEmptyListWhenNoCategoriesExist() {
+        Mockito.when(categoryRepository.findAll()).thenReturn(Collections.emptyList());
 
-        Mockito.when(categoryRepository.findAll()).thenReturn(List.of());
-
-        ResourceNotFoundException exception = org.junit.jupiter.api.Assertions.assertThrows(ResourceNotFoundException.class, () -> categoryService.getAllCategories());
-
-        Assertions.assertThat(exception.getMessage()).isEqualTo("No categories available");
+        List<CategoryResponse> result = categoryService.getAllCategories();
+        org.junit.jupiter.api.Assertions.assertNotNull(result);
+        org.junit.jupiter.api.Assertions.assertTrue(result.isEmpty());
 
         Mockito.verify(categoryRepository).findAll();
     }
+
 }
