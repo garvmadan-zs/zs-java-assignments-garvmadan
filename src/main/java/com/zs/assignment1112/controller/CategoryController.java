@@ -35,9 +35,7 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<List<CategoryResponse>> getAllCategories() {
 
-
         log.info("Request received to fetch all categories");
-
 
         List<CategoryResponse> categories =
                 categoryService.getAllCategories();
@@ -48,7 +46,7 @@ public class CategoryController {
                 categories.size()
         );
 
-        return ResponseEntity.ok(categoryService.getAllCategories());
+        return ResponseEntity.ok(categories);
     }
 }
 

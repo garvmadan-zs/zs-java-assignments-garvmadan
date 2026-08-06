@@ -22,4 +22,11 @@ public class ProductResponse {
 
     private String categoryName;
 
+    public ProductResponse(Long id, String name, BigDecimal price, Long categoryId, String categoryName) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+    }
 }

@@ -28,9 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> categories =
                 categoryRepository.findAll();
         if (categories.isEmpty()) {
-            throw new ResourceNotFoundException(
-                    "No categories available"
-            );
+          log.info("No category exits ");
         }
         log.debug(
                 "Total categories fetched: {}",

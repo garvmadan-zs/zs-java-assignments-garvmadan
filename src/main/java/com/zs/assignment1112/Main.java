@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.configure()
                 .filename(".env.local")
+                .ignoreIfMissing()
                 .load();
 
         System.setProperty("DB_HOST", dotenv.get("DB_HOST"));

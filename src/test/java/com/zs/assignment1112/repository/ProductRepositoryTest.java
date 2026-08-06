@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions;
 
 @DataJpaTest
 class ProductRepositoryTest {
@@ -20,24 +20,11 @@ class ProductRepositoryTest {
 
     @Test
     void shouldFindProductsByCategory() {
-        Category category =
-                Category.builder()
-                        .name("Books")
-                        .build();
-        Category savedCategory =
-                categoryRepository.save(category);
-        Product product =
-                Product.builder()
-                        .name("Spring Boot Guide")
-                        .price(BigDecimal.valueOf(500))
-                        .category(savedCategory)
-                        .build();
+        Category category = Category.builder().name("Books").build();
+        Category savedCategory = categoryRepository.save(category);
+        Product product = Product.builder().name("Spring Boot Guide").price(BigDecimal.valueOf(500)).category(savedCategory).build();
         productRepository.save(product);
-        List<Product> products =
-                productRepository.findByCategoryId(
-                        savedCategory.getId()
-                );
-        assertThat(products)
-                .isNotEmpty();
+        List<Product> products = productRepository.findByCategoryId(savedCategory.getId());
+        Assertions.assertThat(products).isNotEmpty();
     }
 }

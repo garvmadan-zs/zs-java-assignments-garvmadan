@@ -1,48 +1,81 @@
 package com.zs.assignment1112.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zs.assignment1112.dto.response.CategoryResponse;
 import com.zs.assignment1112.service.CategoryService;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.ResponseEntity;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.Mockito;
 
+import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.junit.jupiter.api.Assertions;
 
-@WebMvcTest(CategoryController.class)
 class CategoryControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockitoBean
+    @Mock
     private CategoryService categoryService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private CategoryController categoryController;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        categoryController = new CategoryController(categoryService);
+    }
+
 
     @Test
-    void shouldReturnAllCategories() throws Exception {
+    void getAllCategories_ShouldReturnCategories_WhenCategoriesExist() {
 
-        CategoryResponse response = CategoryResponse.builder()
-                .id(1L)
-                .name("Electronics")
-                .build();
+        List<CategoryResponse> categories = List.of(new CategoryResponse(1L, "Electronics"));
 
-        when(categoryService.getAllCategories())
-                .thenReturn(List.of(response));
+        Mockito.when(categoryService.getAllCategories()).thenReturn(categories);
 
-        mockMvc.perform(get("/categories"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].name").value("Electronics"));
+
+        ResponseEntity<List<CategoryResponse>> response = categoryController.getAllCategories();
+
+
+        Assertions.assertEquals(200, response.getStatusCode().value());
+        Assertions.assertNotNull(response.getBody());
+        Assertions.assertEquals(1, response.getBody().size());
+        Assertions.assertEquals("Electronics", response.getBody().get(0).getName());
+
+        Mockito.verify(categoryService).getAllCategories();
+    }
+
+
+    @Test
+    void getAllCategories_ShouldReturnEmptyList_WhenNoCategoriesExist() {
+
+        Mockito.when(categoryService.getAllCategories()).thenReturn(Collections.emptyList());
+
+
+        ResponseEntity<List<CategoryResponse>> response = categoryController.getAllCategories();
+
+
+        Assertions.assertEquals(200, response.getStatusCode().value());
+        Assertions.assertNotNull(response.getBody());
+        Assertions.assertTrue(response.getBody().isEmpty());
+
+        Mockito.verify(categoryService).getAllCategories();
+    }
+
+
+    @Test
+    void getAllCategories_ShouldPropagateException_WhenServiceFails() {
+
+        Mockito.when(categoryService.getAllCategories()).thenThrow(new RuntimeException("Database error"));
+
+
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> categoryController.getAllCategories());
+
+
+        Assertions.assertEquals("Database error", exception.getMessage());
+
+        Mockito.verify(categoryService).getAllCategories();
     }
 }

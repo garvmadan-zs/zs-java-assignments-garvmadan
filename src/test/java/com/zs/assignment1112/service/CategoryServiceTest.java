@@ -12,9 +12,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import org.assertj.core.api.Assertions;
+import org.mockito.Mockito;
 
 class CategoryServiceTest {
 
@@ -32,41 +31,31 @@ class CategoryServiceTest {
     @Test
     void shouldReturnAllCategories() {
 
-        Category category = Category.builder()
-                .id(1L)
-                .name("Electronics")
-                .build();
+        Category category = Category.builder().id(1L).name("Electronics").build();
 
-        when(categoryRepository.findAll())
-                .thenReturn(List.of(category));
+        Mockito.when(categoryRepository.findAll()).thenReturn(List.of(category));
 
-        List<CategoryResponse> result =
-                categoryService.getAllCategories();
+        List<CategoryResponse> result = categoryService.getAllCategories();
 
-        assertThat(result).hasSize(1);
+        Assertions.assertThat(result).hasSize(1);
 
         CategoryResponse response = result.get(0);
 
-        assertThat(response.getId()).isEqualTo(1L);
-        assertThat(response.getName()).isEqualTo("Electronics");
+        Assertions.assertThat(response.getId()).isEqualTo(1L);
+        Assertions.assertThat(response.getName()).isEqualTo("Electronics");
 
-        verify(categoryRepository).findAll();
+        Mockito.verify(categoryRepository).findAll();
     }
 
     @Test
     void shouldThrowExceptionWhenNoCategoriesExist() {
 
-        when(categoryRepository.findAll())
-                .thenReturn(List.of());
+        Mockito.when(categoryRepository.findAll()).thenReturn(List.of());
 
-        ResourceNotFoundException exception = assertThrows(
-                ResourceNotFoundException.class,
-                () -> categoryService.getAllCategories()
-        );
+        ResourceNotFoundException exception = org.junit.jupiter.api.Assertions.assertThrows(ResourceNotFoundException.class, () -> categoryService.getAllCategories());
 
-        assertThat(exception.getMessage())
-                .isEqualTo("No categories available");
+        Assertions.assertThat(exception.getMessage()).isEqualTo("No categories available");
 
-        verify(categoryRepository).findAll();
+        Mockito.verify(categoryRepository).findAll();
     }
 }

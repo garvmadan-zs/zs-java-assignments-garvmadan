@@ -16,15 +16,15 @@ import java.math.BigDecimal;
 @Builder
 public class CreateProductRequest {
 
-    @NotBlank(message = "Product name is required")
+    @NotBlank(message = ValidationMessages.PRODUCT_NAME_REQUIRED)
     private String name;
 
 
-    @NotNull(message = "Price is required")
-    @Positive(message = "Price must be positive")
+    @NotNull(message = ValidationMessages.PRICE_REQUIRED)
+    @Positive(message = ValidationMessages.PRICE_POSITIVE)
     private BigDecimal price;
 
 
-    @NotNull(message = "Category id is required")
+    @NotNull(message = ValidationMessages.CATEGORY_ID_REQUIRED)
     private Long categoryId;
 }

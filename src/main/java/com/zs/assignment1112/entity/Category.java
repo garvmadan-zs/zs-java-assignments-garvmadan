@@ -1,7 +1,19 @@
 package com.zs.assignment1112.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.ToString;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,17 +54,4 @@ public class Category {
     @Builder.Default
     private List<Product> products = new ArrayList<>();
 
-    public void addProduct(Product product) {
-
-        products.add(product);
-
-        product.setCategory(this);
-    }
-
-    public void removeProduct(Product product) {
-
-        products.remove(product);
-
-        product.setCategory(null);
-    }
 }

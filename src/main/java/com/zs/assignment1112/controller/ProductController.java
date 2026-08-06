@@ -11,7 +11,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -51,7 +57,6 @@ public class ProductController {
 
     /**
      * Fetches products belonging to a category.
-     *
      * @param categoryId category identifier
      * @return products belonging to category
      */
@@ -74,12 +79,16 @@ public class ProductController {
         return ResponseEntity.ok(products);
 
     }
+    /**
+     * Creates a new product.
+     * @param request request body containing product details
+     * @return the newly created product
+     */
 
     @PostMapping
     public ResponseEntity<ProductResponse> createProduct(
             @Valid @RequestBody CreateProductRequest request
     ) {
-        System.out.println("CREATE PRODUCT API HIT");
         log.info(
                 "Received request to create product: {}",
                 request.getName()
@@ -92,10 +101,17 @@ public class ProductController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .header("Product-Created", "true")
+                .header("Product-Status", "Created")
                 .body(response);
     }
 
+
+    /**
+     * Updates an existing product.
+     * @param id the identifier of the product to update
+     * @param request request body containing updated product details
+     * @return the updated product
+     */
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(
             @PathVariable Long id,
@@ -112,7 +128,7 @@ public class ProductController {
                         request
                 );
         return ResponseEntity.ok()
-                .header("Product-updated", "true")
+                .header("Product-Status", "Updated")
                 .body(response);
     }
 

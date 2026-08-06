@@ -54,23 +54,25 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponse> getProductsByCategory(Long categoryId) {
-        log.info(
-                "Fetching products for category id: {}",
-                categoryId
-        );
-        List<Product> products =
-                productRepository.findByCategoryId(categoryId);
-        if (products.isEmpty()) {
+        log.info("Fetching products for category id: {}", categoryId);
+        categoryRepository.findById(categoryId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Category not found with id: " + categoryId));
 
+        List<Product> products = productRepository.findByCategoryId(categoryId);
+
+        if (products.isEmpty()) {
             throw new ResourceNotFoundException(
-                    "No products found for category id: " + categoryId
-            );
+                    "No products found for category id: " + categoryId);
         }
+
         log.debug(
                 "Products found for category {}: {}",
                 categoryId,
                 products.size()
         );
+
         return products.stream()
                 .map(ProductMapper::toResponse)
                 .toList();

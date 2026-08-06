@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions;
 
 @DataJpaTest
 class CategoryRepositoryTest {
@@ -14,22 +14,16 @@ class CategoryRepositoryTest {
 
     @Test
     void shouldSaveAndFindCategory() {
-        Category category =
-                Category.builder()
-                        .name("Electronics")
-                        .build();
+        Category category = Category.builder().name("Electronics").build();
 
 
-        Category saved =
-                repository.save(category);
+        Category saved = repository.save(category);
 
 
-        assertThat(saved.getId())
-                .isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
 
 
-        assertThat(repository.findById(saved.getId()))
-                .isPresent();
+        Assertions.assertThat(repository.findById(saved.getId())).isPresent();
 
     }
 }
