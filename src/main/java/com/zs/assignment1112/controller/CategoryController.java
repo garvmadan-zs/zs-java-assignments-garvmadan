@@ -9,7 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+
+import javax.naming.*;
 import java.util.List;
 
 /**
@@ -18,6 +22,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/categories")
 @RequiredArgsConstructor
+@Tag(
+        name="API's for the Products"
+)
 public class CategoryController {
 
 
@@ -32,6 +39,7 @@ public class CategoryController {
      *
      * @return list of categories
      */
+    @Operation(summary = "Get all the categories.")
     @GetMapping
     public ResponseEntity<List<CategoryResponse>> getAllCategories() {
 

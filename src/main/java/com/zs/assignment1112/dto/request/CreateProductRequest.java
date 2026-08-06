@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +19,6 @@ public class CreateProductRequest {
 
     @NotBlank(message = ValidationMessages.PRODUCT_NAME_REQUIRED)
     private String name;
-
 
     @NotNull(message = ValidationMessages.PRICE_REQUIRED)
     @Positive(message = ValidationMessages.PRICE_POSITIVE)
